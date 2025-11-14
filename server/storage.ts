@@ -1,38 +1,16 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { type Memo, type InsertMemo } from "@shared/schema";
+import { db } from "../db";
+import { memos } from "@shared/schema";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  createMemo(memo: InsertMemo): Promise<Memo>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
-  }
-
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
-  }
-
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+export class DbStorage implements IStorage {
+  async createMemo(insertMemo: InsertMemo): Promise<Memo> {
+    const [memo] = await db.insert(memos).values(insertMemo).returning();
+    return memo;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DbStorage();
