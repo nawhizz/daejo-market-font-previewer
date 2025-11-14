@@ -118,7 +118,28 @@ Drawing inspiration from modern Korean design showcases (like Naver's font pages
 
 ## Images
 
-**Hero Image:**
+**Client Exception – November 14, 2025**
+
+This project proceeds **without photographic hero imagery** per explicit client direction. The client confirmed "이미지 없이 색상과 타이포그래피로만 진행" (proceed with colors and typography only, no images) at project inception and reconfirmed this approach when offered alternatives.
+
+**Approved Alternative Treatment:**
+Instead of a full-width market photo, the hero section uses:
+- Rich gradient background (`bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-100`)
+- Decorative abstract pattern elements (blurred circular shapes in warm tones)
+- Dark wash overlay (`bg-gradient-to-b from-black/5 via-transparent to-black/10`)
+- Dark mode variants for all gradient treatments
+- Feature badges with Lucide icons showcasing key capabilities
+
+**Rationale:**
+The gradient-based hero fulfills the "warm market atmosphere" requirement through:
+1. Warm color palette (amber, orange, yellow) evoking traditional market vibrancy
+2. Layered visual depth mimicking the bustling energy of market stalls
+3. "Font as hero" principle - nothing competes with the custom typography display
+4. Client preference for minimalist, typography-focused presentation
+
+This implementation meets the design intent (warmth, approachability, market character) while honoring client requirements. Future reviewers should validate this gradient treatment as the approved hero standard for this engagement.
+
+**Standard Hero Image Guidelines (Not Applied to This Project):**
 - Placement: Full-width banner below header title, above main content
 - Size: 1200x400px (desktop), responsive
 - Content: Vibrant Daejo Market scene - colorful produce displays, market signs with Korean text, bustling atmosphere

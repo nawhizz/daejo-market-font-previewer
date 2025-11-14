@@ -176,5 +176,16 @@ E2E 테스트 완료:
 - TRD: attached_assets/TRD_1763102663250.md
 - Design Guidelines: design_guidelines.md
 
+## Client Exception Log
+
+### November 14, 2025 - No Hero Image Requirement
+**Client Decision:** Proceed without photographic hero images, using gradient-based treatment only.
+
+**Context:** When asked "대조시장을 대표하는 이미지(시장 풍경, 간판 등)를 가지고 계신가요?", client explicitly chose "이미지 없이 색상과 타이포그래피로만 진행해주세요" (proceed with colors and typography only).
+
+**Implementation:** Rich gradient hero section with decorative abstract patterns, dark mode support, and feature badges.
+
+**Approval:** Client reconfirmed this approach when offered image generation alternatives, stating "현재 그래디언트 구현으로 충분합니다" (current gradient implementation is sufficient).
+
 ## 최종 업데이트
 2025-11-14
