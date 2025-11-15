@@ -7,7 +7,7 @@
 ## 주요 기능 (MVP)
 
 ### 구현 완료된 기능
-- ✅ 대조시장 폰트 적용 (Black Han Sans, Noto Sans KR 사용)
+- ✅ 대조시장 전용 폰트 적용 (DaejoMarket-Regular.ttf 커스텀 폰트)
 - ✅ 텍스트 입력 영역 (ContentEditable 메모창)
 - ✅ 스타일 편집 툴바
   - 폰트 색상 선택 (7가지 프리셋)
@@ -42,14 +42,18 @@
 - sanitize-html (XSS 방지)
 
 ### 웹폰트
-- Black Han Sans (디스플레이용)
-- Noto Sans KR (UI용)
-- Google Fonts 사용
+- **DaejoMarket-Regular.ttf** (대조시장 전용 커스텀 폰트, 메모 디스플레이용)
+- Black Han Sans (폴백 폰트)
+- Noto Sans KR (UI 및 폴백 폰트)
+- 폰트 위치: `client/public/fonts/DaejoMarket-Regular.ttf`
 
 ## 프로젝트 구조
 
 ```
 ├── client/                 # 프론트엔드
+│   ├── public/
+│   │   └── fonts/        # 커스텀 폰트
+│   │       └── DaejoMarket-Regular.ttf
 │   ├── src/
 │   │   ├── components/    # UI 컴포넌트
 │   │   │   ├── ui/       # Shadcn UI 컴포넌트
@@ -58,7 +62,7 @@
 │   │   │   ├── home.tsx  # 메인 페이지
 │   │   │   └── not-found.tsx
 │   │   ├── App.tsx
-│   │   └── index.css     # 글로벌 스타일
+│   │   └── index.css     # 글로벌 스타일 + @font-face
 │   └── index.html
 ├── server/                # 백엔드
 │   ├── routes.ts         # API 라우트
@@ -144,9 +148,11 @@ npm run db:push
 - 따뜻하고 생동감 있는 시장 분위기
 
 ### 타이포그래피
-- Display Font: Black Han Sans (대조시장체 시뮬레이션)
+- **Display Font**: DaejoMarket (대조시장 전용 커스텀 폰트)
+- **Fallback Fonts**: Black Han Sans → Noto Sans KR → system sans-serif
 - UI Font: Noto Sans KR, system fonts
 - 크기: 16px ~ 72px (사용자 조절 가능)
+- 폰트 스택: `"DaejoMarket", "Black Han Sans", "Noto Sans KR", sans-serif`
 
 ### 반응형 브레이크포인트
 - Mobile: < 768px
@@ -238,4 +244,5 @@ E2E 테스트 완료:
 **Approval:** Client reconfirmed this approach when offered image generation alternatives, stating "현재 그래디언트 구현으로 충분합니다" (current gradient implementation is sufficient).
 
 ## 최종 업데이트
-2025-11-15: 보안 강화 완료 (다층 XSS 방지 시스템)
+- 2025-11-15: 보안 강화 완료 (다층 XSS 방지 시스템)
+- 2025-11-15: 대조시장 전용 커스텀 폰트 적용 (DaejoMarket-Regular.ttf)
