@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { Type, Palette, Plus, Minus, Bold, Italic, Paintbrush, Save, Heart, BookOpen } from "lucide-react";
+import { Type, Palette, Plus, Minus, Bold, Italic, Paintbrush, Save, Heart, BookOpen, RotateCcw } from "lucide-react";
 import { Link } from "wouter";
 import type { InsertMemo } from "@shared/schema";
 
@@ -96,6 +96,13 @@ export default function Home() {
 
   const decreaseFontSize = () => {
     if (fontSize > 16) setFontSize(fontSize - 4);
+  };
+
+  const handleClear = () => {
+    if (editorRef.current) {
+      editorRef.current.textContent = "";
+    }
+    setContent("");
   };
 
   return (
@@ -226,6 +233,15 @@ export default function Home() {
 
         {/* Action Buttons */}
         <div className="flex-shrink-0 p-6 border-t border-border space-y-3">
+          <Button
+            onClick={handleClear}
+            variant="outline"
+            className="w-full h-12 gap-2"
+            data-testid="button-clear-memo"
+          >
+            <RotateCcw className="w-4 h-4" />
+            전체 지우기
+          </Button>
           <Button
             onClick={handleSave}
             disabled={saveMemo.isPending}
