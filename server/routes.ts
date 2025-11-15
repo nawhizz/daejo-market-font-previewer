@@ -21,7 +21,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // POST /api/memos - Create a new memo
   app.post("/api/memos", async (req, res) => {
     try {
-      // Validate request body
+      // Validate request body with strict schema validation
       const validationResult = insertMemoSchema.safeParse(req.body);
       
       if (!validationResult.success) {
@@ -33,41 +33,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const { content, styles, bgColor } = validationResult.data;
 
-      // Sanitize content to prevent XSS attacks
+      // Sanitize content to prevent XSS attacks (strip all HTML tags)
       const sanitizedContent = sanitizeHtml(content, {
         allowedTags: [], // No HTML tags allowed, plain text only
         allowedAttributes: {},
       });
 
-      // Validate color values (simple hex color validation)
-      const hexColorRegex = /^#[0-9A-Fa-f]{6}$/;
-      if (!hexColorRegex.test(styles.color) || !hexColorRegex.test(bgColor)) {
-        return res.status(400).json({
-          error: "Invalid color format. Use hex colors (e.g., #FFFFFF)",
-        });
-      }
-
-      // Validate font size (must be between 16 and 72)
-      const fontSizeNum = parseInt(styles.fontSize);
-      if (isNaN(fontSizeNum) || fontSizeNum < 16 || fontSizeNum > 72) {
-        return res.status(400).json({
-          error: "Font size must be between 16 and 72 pixels",
-        });
-      }
-
-      // Validate font weight
-      if (!["normal", "bold"].includes(styles.fontWeight)) {
-        return res.status(400).json({
-          error: "Font weight must be 'normal' or 'bold'",
-        });
-      }
-
-      // Validate font style
-      if (!["normal", "italic"].includes(styles.fontStyle)) {
-        return res.status(400).json({
-          error: "Font style must be 'normal' or 'italic'",
-        });
-      }
+      // All other validations (colors, fontSize, fontWeight, fontStyle) 
+      // are now handled by the Zod schema with strict regex/enum checks
 
       // Create memo with sanitized content
       const memo = await storage.createMemo({

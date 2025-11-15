@@ -345,30 +345,43 @@ export default function Home() {
             </div>
           ) : (
             <div className="grid gap-6 md:grid-cols-2" data-testid="container-saved-memos">
-              {savedMemos.map((memo) => (
-                <Card
-                  key={memo.id}
-                  className="p-6 shadow-lg"
-                  style={{ backgroundColor: memo.bgColor }}
-                  data-testid={`card-memo-${memo.id}`}
-                >
-                  <div
-                    className="font-display leading-relaxed break-words"
-                    style={{
-                      color: memo.styles.color,
-                      fontSize: memo.styles.fontSize,
-                      fontWeight: memo.styles.fontWeight,
-                      fontStyle: memo.styles.fontStyle,
-                    }}
-                    data-testid={`text-memo-content-${memo.id}`}
+              {savedMemos.map((memo) => {
+                const safeFontSize = parseInt(memo.styles.fontSize) || 32;
+                const clampedFontSize = Math.min(Math.max(safeFontSize, 16), 72);
+                const safeFontWeight = memo.styles.fontWeight === "bold" ? "bold" : "normal";
+                const safeFontStyle = memo.styles.fontStyle === "italic" ? "italic" : "normal";
+                const safeColor = /^#[0-9A-Fa-f]{6}$/.test(memo.styles.color) 
+                  ? memo.styles.color 
+                  : "#2C1810";
+                const safeBgColor = /^#[0-9A-Fa-f]{6}$/.test(memo.bgColor)
+                  ? memo.bgColor
+                  : "#FFF8E1";
+
+                return (
+                  <Card
+                    key={memo.id}
+                    className="p-6 shadow-lg"
+                    style={{ backgroundColor: safeBgColor }}
+                    data-testid={`card-memo-${memo.id}`}
                   >
-                    {memo.content}
-                  </div>
-                  <div className="mt-4 text-xs text-muted-foreground">
-                    {new Date(memo.createdAt).toLocaleString("ko-KR")}
-                  </div>
-                </Card>
-              ))}
+                    <div
+                      className="font-display leading-relaxed break-words"
+                      style={{
+                        color: safeColor,
+                        fontSize: `${clampedFontSize}px`,
+                        fontWeight: safeFontWeight,
+                        fontStyle: safeFontStyle,
+                      }}
+                      data-testid={`text-memo-content-${memo.id}`}
+                    >
+                      {memo.content}
+                    </div>
+                    <div className="mt-4 text-xs text-muted-foreground">
+                      {new Date(memo.createdAt).toLocaleString("ko-KR")}
+                    </div>
+                  </Card>
+                );
+              })}
             </div>
           )}
         </div>
