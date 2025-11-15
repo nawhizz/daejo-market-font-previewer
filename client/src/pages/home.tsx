@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -30,6 +30,7 @@ const PRESET_BG_COLORS = [
 ];
 
 export default function Home() {
+  const editorRef = useRef<HTMLDivElement>(null);
   const [content, setContent] = useState("");
   const [fontSize, setFontSize] = useState(32);
   const [fontColor, setFontColor] = useState("#2C1810");
@@ -63,7 +64,10 @@ export default function Home() {
   });
 
   const handleSave = () => {
-    if (!content.trim()) {
+    const actualContent = editorRef.current?.textContent || "";
+    setContent(actualContent);
+    
+    if (!actualContent.trim()) {
       toast({
         title: "내용을 입력해주세요",
         description: "메모 내용이 비어있습니다.",
@@ -74,7 +78,7 @@ export default function Home() {
     }
 
     const memo: InsertMemo = {
-      content: content.trim(),
+      content: actualContent.trim(),
       styles: {
         color: fontColor,
         fontSize: `${fontSize}px`,
@@ -292,6 +296,7 @@ export default function Home() {
             style={{ backgroundColor: bgColor }}
           >
             <div
+              ref={editorRef}
               contentEditable
               suppressContentEditableWarning
               onInput={(e) => {
