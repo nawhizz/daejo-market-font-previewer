@@ -294,7 +294,15 @@ export default function Home() {
             <div
               contentEditable
               suppressContentEditableWarning
-              onInput={(e) => setContent(e.currentTarget.textContent || "")}
+              onInput={(e) => {
+                const textContent = e.currentTarget.textContent || "";
+                setContent(textContent);
+              }}
+              onPaste={(e) => {
+                e.preventDefault();
+                const text = e.clipboardData.getData('text/plain');
+                document.execCommand('insertText', false, text);
+              }}
               data-placeholder="여기에 메시지를 입력해보세요..."
               className="outline-none min-h-[300px] font-display leading-relaxed"
               style={{
