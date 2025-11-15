@@ -2,7 +2,7 @@
 
 ## 프로젝트 개요
 
-대조시장 재디자인 프로젝트의 전용 폰트를 사용자가 직접 체험하고 꾸며볼 수 있는 인터랙티브 웹 애플리케이션입니다. 사용자는 텍스트를 입력하고, 폰트 스타일(색상, 크기, 굵기, 기울임)과 배경색을 자유롭게 조정한 후 저장할 수 있습니다.
+대조시장 재디자인 프로젝트의 전용 폰트를 사용자가 직접 체험하고 꾸며볼 수 있는 인터랙티브 웹 애플리케이션입니다. 사용자는 텍스트를 입력하고, 폰트 스타일(색상, 크기, 굵기, 기울임)과 배경색을 자유롭게 조정한 후 저장할 수 있습니다. iPad 화면에 최적화된 레이아웃과 터치 타겟으로 태블릿 환경에서 최상의 사용자 경험을 제공합니다.
 
 ## 주요 기능 (MVP)
 
@@ -16,10 +16,12 @@
   - 굵게(Bold) 토글
   - 기울임(Italic) 토글
 - ✅ 메모 저장 기능 (PostgreSQL)
-- ✅ 저장된 메모 불러오기 (사용자 요청)
+- ✅ 저장된 메모 전용 페이지 (독립적인 뷰)
+- ✅ 페이지 라우팅 (홈/저장된 메모)
 - ✅ Toast 알림
 - ✅ 다층 XSS 방지 (Zod schema + sanitize-html + client-side validation)
 - ✅ 엄격한 입력값 검증 (정규식, enum)
+- ✅ iPad 최적화 (터치 타겟 44px+ 준수)
 - ✅ 반응형 디자인
 - ✅ 다크 모드 지원
 - ✅ 풍부한 히어로 섹션 (시장 분위기 표현)
@@ -59,7 +61,8 @@
 │   │   │   ├── ui/       # Shadcn UI 컴포넌트
 │   │   │   └── theme-toggle.tsx
 │   │   ├── pages/        # 페이지
-│   │   │   ├── home.tsx  # 메인 페이지
+│   │   │   ├── home.tsx          # 메인 에디터 페이지
+│   │   │   ├── saved-memos.tsx   # 저장된 메모 페이지
 │   │   │   └── not-found.tsx
 │   │   ├── App.tsx
 │   │   └── index.css     # 글로벌 스타일 + @font-face
@@ -156,15 +159,37 @@ npm run db:push
 
 ### 반응형 브레이크포인트
 - Mobile: < 768px
-- Desktop: ≥ 768px
+- Tablet (iPad): ≥ 768px (최적화 타겟)
+- Desktop: ≥ 1024px
+
+### iPad 최적화
+- **터치 타겟 크기** (Apple HIG 준수):
+  - 색상 선택 버튼: 48px × 48px (기본) → 56px × 56px (md 이상)
+  - 컨트롤 버튼 (크기, Bold, Italic): 44px × 44px (기본) → 48px × 48px (md 이상)
+  - 액션 버튼 (저장하기, 메모 보기): 200px × 94px (세로 패딩 증가)
+- **레이아웃**:
+  - 에디터 최소 높이: 450px (기본) → 500px (md 이상)
+  - 최대 너비: 4xl (896px) → 5xl (1024px)
+  - 패딩 및 간격: iPad 화면에 맞게 증가
 
 ## 사용자 경험
 
+### 홈 페이지 (/)
 1. **히어로 섹션**: 풍부한 그래디언트와 장식 요소로 시장 분위기 표현
 2. **스타일 툴바**: 직관적인 색상 선택과 크기 조절
-3. **메모 에디터**: 실시간 스타일 프리뷰
+3. **메모 에디터**: 실시간 스타일 프리뷰, iPad 터치에 최적화
 4. **저장 기능**: Toast 알림으로 저장 확인
-5. **다크 모드**: 테마 토글 버튼
+5. **네비게이션**: "저장된 메모 보기" 버튼으로 저장된 메모 페이지 이동
+
+### 저장된 메모 페이지 (/saved-memos)
+1. **그리드 레이아웃**: 저장된 모든 메모를 카드 형태로 표시
+2. **스타일 보존**: 각 메모의 폰트 색상, 크기, 굵기, 기울임, 배경색 유지
+3. **뒤로가기**: "폰트 체험하기" 버튼으로 홈 페이지 복귀
+4. **반응형**: 1-3열 그리드 (화면 크기에 따라 자동 조정)
+
+### 공통
+- **다크 모드**: 고정 위치 테마 토글 버튼
+- **터치 최적화**: 모든 인터랙티브 요소 44px 이상 (Apple HIG 준수)
 
 ## API 엔드포인트 (추가)
 
@@ -191,12 +216,17 @@ npm run db:push
 
 ## 테스트
 
-E2E 테스트 완료:
-- ✅ 텍스트 입력 및 편집
-- ✅ 모든 스타일 컨트롤 작동
-- ✅ 데이터베이스 저장 검증
+### E2E 테스트 (iPad 뷰포트 1024×768)
+- ✅ 텍스트 입력 및 편집 (contentEditable)
+- ✅ 모든 스타일 컨트롤 작동 (색상, 크기, Bold, Italic)
+- ✅ 데이터베이스 저장 검증 (POST /api/memos 201)
 - ✅ Toast 알림 표시
-- ✅ 저장된 메모 불러오기 및 표시
+- ✅ 페이지 전환 (/ ↔ /saved-memos)
+- ✅ 저장된 메모 표시 (스타일 보존 확인)
+- ✅ 터치 타겟 크기 검증 (모두 44px 이상)
+  - 색상 버튼: 56×56px
+  - 컨트롤 버튼: 48×48px
+  - 액션 버튼: 200×94px, 250×94px
 - ✅ XSS 공격 차단 (악의적 API 호출 테스트)
 - ✅ 정상 사용자 플로우 검증
 
@@ -215,9 +245,11 @@ E2E 테스트 완료:
    - `sanitize-html`로 content HTML 태그 완전 제거
    - 모든 입력값 검증 후 저장
 
-3. **Client Layer** (`client/src/pages/home.tsx`)
+3. **Client Layer** (`client/src/pages/home.tsx`, `client/src/pages/saved-memos.tsx`)
    - `onPaste` 핸들러로 HTML 붙여넣기 차단 (plain text만 허용)
-   - 렌더링 시 추가 검증 및 안전한 fallback 값 사용
+   - useRef로 contentEditable의 textContent 안정적으로 읽기
+   - 저장 시 state와 editor content 동기화
+   - React의 자동 이스케이프 활용 (`{memo.content}`)
    - `parseInt()` + clamping으로 fontSize 보호
    - Enum 검증으로 fontWeight/fontStyle 보호
    - Regex 테스트로 색상 검증
@@ -243,6 +275,26 @@ E2E 테스트 완료:
 
 **Approval:** Client reconfirmed this approach when offered image generation alternatives, stating "현재 그래디언트 구현으로 충분합니다" (current gradient implementation is sufficient).
 
+## 기술적 개선 사항
+
+### ContentEditable 버그 수정 (2025-11-15)
+**문제**: Playwright E2E 테스트에서 contentEditable에 입력한 텍스트가 저장 시 'undefined'로 표시됨
+**원인**: onInput 이벤트가 자동화된 입력에서 발생하지 않아 state 업데이트 실패
+**해결**: 
+- `useRef` 추가하여 contentEditable DOM 요소 직접 참조
+- `handleSave`에서 `editorRef.current?.textContent` 직접 읽기
+- `setContent(actualContent)`로 state 동기화
+- state와 실제 editor content 일관성 보장
+
+**영향**: 
+- 자동화된 테스트 통과
+- undo/redo, 프로그래밍적 입력 지원
+- state 기반 validation 신뢰성 향상
+
 ## 최종 업데이트
+- 2025-11-15: iPad 최적화 완료 (터치 타겟 44px+, 레이아웃 조정)
+- 2025-11-15: 페이지 분리 (홈 에디터 + 저장된 메모 전용 페이지)
+- 2025-11-15: ContentEditable 버그 수정 (useRef + state 동기화)
+- 2025-11-15: E2E 테스트 통과 (iPad 뷰포트 검증)
 - 2025-11-15: 보안 강화 완료 (다층 XSS 방지 시스템)
 - 2025-11-15: 대조시장 전용 커스텀 폰트 적용 (DaejoMarket-Regular.ttf)
