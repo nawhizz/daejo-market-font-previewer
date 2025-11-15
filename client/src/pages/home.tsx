@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { Type, Palette, Plus, Minus, Bold, Italic, Paintbrush, Save, Heart } from "lucide-react";
+import { Type, Palette, Plus, Minus, Bold, Italic, Paintbrush, Save, Heart, BookOpen } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import type { InsertMemo, Memo } from "@shared/schema";
+import { Link } from "wouter";
+import type { InsertMemo } from "@shared/schema";
 
 const PRESET_COLORS = [
   { name: "검정", value: "#2C1810" },
@@ -37,11 +38,6 @@ export default function Home() {
   const [isItalic, setIsItalic] = useState(false);
   
   const { toast } = useToast();
-
-  // Fetch saved memos
-  const { data: savedMemos = [], isLoading: isLoadingMemos } = useQuery<Memo[]>({
-    queryKey: ["/api/memos"],
-  });
 
   const saveMemo = useMutation({
     mutationFn: async (memo: InsertMemo) => {
@@ -157,10 +153,10 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="pb-16 px-6 md:px-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+      <main className="pb-16 px-6 md:px-10 lg:px-12">
+        <div className="max-w-5xl mx-auto space-y-6 md:space-y-8 py-8 md:py-12">
           {/* Style Toolbar */}
-          <Card className="p-6 md:p-8 shadow-lg">
+          <Card className="p-6 md:p-10 shadow-lg">
             <div className="space-y-6">
               {/* Background Color Section */}
               <div className="space-y-3">
@@ -170,12 +166,12 @@ export default function Home() {
                     배경 색상
                   </label>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3 md:gap-4">
                   {PRESET_BG_COLORS.map((color) => (
                     <button
                       key={color.value}
                       onClick={() => setBgColor(color.value)}
-                      className={`w-10 h-10 rounded-full transition-all ${
+                      className={`w-12 h-12 md:w-14 md:h-14 rounded-full transition-all ${
                         bgColor === color.value
                           ? "ring-4 ring-primary ring-offset-2"
                           : "hover-elevate"
@@ -196,12 +192,12 @@ export default function Home() {
                     글자 색상
                   </label>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-3 md:gap-4">
                   {PRESET_COLORS.map((color) => (
                     <button
                       key={color.value}
                       onClick={() => setFontColor(color.value)}
-                      className={`w-10 h-10 rounded-full transition-all border-2 border-border ${
+                      className={`w-12 h-12 md:w-14 md:h-14 rounded-full transition-all border-2 border-border ${
                         fontColor === color.value
                           ? "ring-4 ring-primary ring-offset-2"
                           : "hover-elevate"
@@ -215,24 +211,25 @@ export default function Home() {
               </div>
 
               {/* Font Controls */}
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-6 md:gap-8">
                 {/* Font Size */}
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-card-foreground">
+                <div className="space-y-3">
+                  <label className="text-sm md:text-base font-semibold text-card-foreground">
                     글자 크기
                   </label>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3">
                     <Button
                       variant="outline"
                       size="icon"
                       onClick={decreaseFontSize}
                       disabled={fontSize <= 16}
+                      className="w-11 h-11 md:w-12 md:h-12"
                       data-testid="button-decrease-fontsize"
                     >
-                      <Minus className="w-4 h-4" />
+                      <Minus className="w-5 h-5" />
                     </Button>
                     <span 
-                      className="w-16 text-center font-semibold text-lg"
+                      className="w-20 text-center font-semibold text-xl"
                       data-testid="text-fontsize-value"
                     >
                       {fontSize}px
@@ -242,16 +239,17 @@ export default function Home() {
                       size="icon"
                       onClick={increaseFontSize}
                       disabled={fontSize >= 72}
+                      className="w-11 h-11 md:w-12 md:h-12"
                       data-testid="button-increase-fontsize"
                     >
-                      <Plus className="w-4 h-4" />
+                      <Plus className="w-5 h-5" />
                     </Button>
                   </div>
                 </div>
 
                 {/* Bold Toggle */}
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-card-foreground">
+                <div className="space-y-3">
+                  <label className="text-sm md:text-base font-semibold text-card-foreground">
                     굵게
                   </label>
                   <div>
@@ -259,16 +257,17 @@ export default function Home() {
                       variant={isBold ? "default" : "outline"}
                       size="icon"
                       onClick={() => setIsBold(!isBold)}
+                      className="w-11 h-11 md:w-12 md:h-12"
                       data-testid="button-toggle-bold"
                     >
-                      <Bold className="w-4 h-4" />
+                      <Bold className="w-5 h-5" />
                     </Button>
                   </div>
                 </div>
 
                 {/* Italic Toggle */}
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-card-foreground">
+                <div className="space-y-3">
+                  <label className="text-sm md:text-base font-semibold text-card-foreground">
                     기울임
                   </label>
                   <div>
@@ -276,9 +275,10 @@ export default function Home() {
                       variant={isItalic ? "default" : "outline"}
                       size="icon"
                       onClick={() => setIsItalic(!isItalic)}
+                      className="w-11 h-11 md:w-12 md:h-12"
                       data-testid="button-toggle-italic"
                     >
-                      <Italic className="w-4 h-4" />
+                      <Italic className="w-5 h-5" />
                     </Button>
                   </div>
                 </div>
@@ -288,7 +288,7 @@ export default function Home() {
 
           {/* Memo Editor */}
           <Card 
-            className="p-8 md:p-12 shadow-xl min-h-[400px] transition-colors duration-200"
+            className="p-10 md:p-16 shadow-xl min-h-[450px] md:min-h-[500px] transition-colors duration-200"
             style={{ backgroundColor: bgColor }}
           >
             <div
@@ -304,7 +304,7 @@ export default function Home() {
                 document.execCommand('insertText', false, text);
               }}
               data-placeholder="여기에 메시지를 입력해보세요..."
-              className="outline-none min-h-[300px] font-display leading-relaxed"
+              className="outline-none min-h-[350px] md:min-h-[400px] font-display leading-relaxed"
               style={{
                 color: fontColor,
                 fontSize: `${fontSize}px`,
@@ -315,75 +315,29 @@ export default function Home() {
             />
           </Card>
 
-          {/* Save Button */}
-          <div className="flex justify-center">
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-4 md:gap-6 pt-4">
             <Button
               size="lg"
               onClick={handleSave}
               disabled={saveMemo.isPending}
-              className="px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
+              className="px-10 py-7 md:py-8 text-xl rounded-full shadow-lg hover:shadow-xl transition-all min-w-[200px]"
               data-testid="button-save-memo"
             >
               {saveMemo.isPending ? "저장 중..." : "저장하기"}
             </Button>
+            <Link href="/saved-memos">
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full px-10 py-7 md:py-8 text-xl rounded-full shadow-lg hover:shadow-xl transition-all min-w-[200px] gap-3"
+                data-testid="button-view-saved-memos"
+              >
+                <BookOpen className="w-6 h-6" />
+                저장된 메모 보기
+              </Button>
+            </Link>
           </div>
-        </div>
-
-        {/* Saved Memos Section */}
-        <div className="max-w-4xl mx-auto px-6 md:px-8 py-12">
-          <h2 className="text-3xl font-display font-bold text-foreground mb-8 text-center">
-            저장된 메모
-          </h2>
-
-          {isLoadingMemos ? (
-            <div className="text-center text-muted-foreground" data-testid="text-loading-memos">
-              불러오는 중...
-            </div>
-          ) : savedMemos.length === 0 ? (
-            <div className="text-center text-muted-foreground" data-testid="text-no-memos">
-              아직 저장된 메모가 없습니다.
-            </div>
-          ) : (
-            <div className="grid gap-6 md:grid-cols-2" data-testid="container-saved-memos">
-              {savedMemos.map((memo) => {
-                const safeFontSize = parseInt(memo.styles.fontSize) || 32;
-                const clampedFontSize = Math.min(Math.max(safeFontSize, 16), 72);
-                const safeFontWeight = memo.styles.fontWeight === "bold" ? "bold" : "normal";
-                const safeFontStyle = memo.styles.fontStyle === "italic" ? "italic" : "normal";
-                const safeColor = /^#[0-9A-Fa-f]{6}$/.test(memo.styles.color) 
-                  ? memo.styles.color 
-                  : "#2C1810";
-                const safeBgColor = /^#[0-9A-Fa-f]{6}$/.test(memo.bgColor)
-                  ? memo.bgColor
-                  : "#FFF8E1";
-
-                return (
-                  <Card
-                    key={memo.id}
-                    className="p-6 shadow-lg"
-                    style={{ backgroundColor: safeBgColor }}
-                    data-testid={`card-memo-${memo.id}`}
-                  >
-                    <div
-                      className="font-display leading-relaxed break-words"
-                      style={{
-                        color: safeColor,
-                        fontSize: `${clampedFontSize}px`,
-                        fontWeight: safeFontWeight,
-                        fontStyle: safeFontStyle,
-                      }}
-                      data-testid={`text-memo-content-${memo.id}`}
-                    >
-                      {memo.content}
-                    </div>
-                    <div className="mt-4 text-xs text-muted-foreground">
-                      {new Date(memo.createdAt).toLocaleString("ko-KR")}
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
-          )}
         </div>
       </main>
 
