@@ -5,6 +5,19 @@ import { insertMemoSchema } from "@shared/schema";
 import sanitizeHtml from "sanitize-html";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // GET /api/memos - Get all memos
+  app.get("/api/memos", async (_req, res) => {
+    try {
+      const memos = await storage.getMemos(20);
+      res.json(memos);
+    } catch (error) {
+      console.error("Error fetching memos:", error);
+      res.status(500).json({
+        error: "Internal server error",
+      });
+    }
+  });
+
   // POST /api/memos - Create a new memo
   app.post("/api/memos", async (req, res) => {
     try {

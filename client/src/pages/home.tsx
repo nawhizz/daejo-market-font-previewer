@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Type, Palette, Plus, Minus, Bold, Italic, Paintbrush, Save, Heart } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import type { InsertMemo } from "@shared/schema";
+import type { InsertMemo, Memo } from "@shared/schema";
 
 const PRESET_COLORS = [
   { name: "검정", value: "#2C1810" },
@@ -38,6 +38,11 @@ export default function Home() {
   
   const { toast } = useToast();
 
+  // Fetch saved memos
+  const { data: savedMemos = [], isLoading: isLoadingMemos } = useQuery<Memo[]>({
+    queryKey: ["/api/memos"],
+  });
+
   const saveMemo = useMutation({
     mutationFn: async (memo: InsertMemo) => {
       return await apiRequest("POST", "/api/memos", memo);
@@ -48,6 +53,8 @@ export default function Home() {
         description: "메모가 성공적으로 저장되었습니다.",
         duration: 3000,
       });
+      
+      queryClient.invalidateQueries({ queryKey: ["/api/memos"] });
     },
     onError: () => {
       toast({
@@ -312,6 +319,50 @@ export default function Home() {
               {saveMemo.isPending ? "저장 중..." : "저장하기"}
             </Button>
           </div>
+        </div>
+
+        {/* Saved Memos Section */}
+        <div className="max-w-4xl mx-auto px-6 md:px-8 py-12">
+          <h2 className="text-3xl font-display font-bold text-foreground mb-8 text-center">
+            저장된 메모
+          </h2>
+
+          {isLoadingMemos ? (
+            <div className="text-center text-muted-foreground" data-testid="text-loading-memos">
+              불러오는 중...
+            </div>
+          ) : savedMemos.length === 0 ? (
+            <div className="text-center text-muted-foreground" data-testid="text-no-memos">
+              아직 저장된 메모가 없습니다.
+            </div>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2" data-testid="container-saved-memos">
+              {savedMemos.map((memo) => (
+                <Card
+                  key={memo.id}
+                  className="p-6 shadow-lg"
+                  style={{ backgroundColor: memo.bgColor }}
+                  data-testid={`card-memo-${memo.id}`}
+                >
+                  <div
+                    className="font-display leading-relaxed break-words"
+                    style={{
+                      color: memo.styles.color,
+                      fontSize: memo.styles.fontSize,
+                      fontWeight: memo.styles.fontWeight,
+                      fontStyle: memo.styles.fontStyle,
+                    }}
+                    data-testid={`text-memo-content-${memo.id}`}
+                  >
+                    {memo.content}
+                  </div>
+                  <div className="mt-4 text-xs text-muted-foreground">
+                    {new Date(memo.createdAt).toLocaleString("ko-KR")}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </main>
 
