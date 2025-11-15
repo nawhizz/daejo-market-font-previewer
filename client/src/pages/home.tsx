@@ -5,7 +5,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Type, Palette, Plus, Minus, Bold, Italic, Paintbrush, Save, Heart, BookOpen } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Link } from "wouter";
 import type { InsertMemo } from "@shared/schema";
 
@@ -101,11 +100,6 @@ export default function Home() {
 
   return (
     <div className="h-screen bg-background flex overflow-hidden">
-      {/* Theme Toggle - Fixed Position */}
-      <div className="fixed top-4 right-4 z-50">
-        <ThemeToggle />
-      </div>
-
       {/* Left Sidebar - Controls */}
       <aside className="w-80 flex-shrink-0 border-r border-border bg-card flex flex-col overflow-hidden">
         {/* Header */}

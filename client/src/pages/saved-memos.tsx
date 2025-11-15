@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import type { Memo } from "@shared/schema";
@@ -13,11 +12,6 @@ export default function SavedMemos() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Theme Toggle - Fixed Position */}
-      <div className="fixed top-6 right-6 z-50">
-        <ThemeToggle />
-      </div>
-
       {/* Header with Back Button */}
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
         <div className="max-w-6xl mx-auto px-6 md:px-8 py-4 flex items-center justify-between">
