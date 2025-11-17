@@ -63,7 +63,7 @@ export default function Home() {
   });
 
   const handleSave = () => {
-    const actualContent = editorRef.current?.textContent || "";
+    const actualContent = editorRef.current?.innerText || "";
     setContent(actualContent);
     
     if (!actualContent.trim()) {
@@ -274,7 +274,7 @@ export default function Home() {
             contentEditable
             suppressContentEditableWarning
             onInput={(e) => {
-              const textContent = e.currentTarget.textContent || "";
+              const textContent = e.currentTarget.innerText || "";
               setContent(textContent);
             }}
             onPaste={(e) => {

@@ -67,7 +67,7 @@ export default function SavedMemos() {
                   data-testid={`card-memo-${memo.id}`}
                 >
                   <div
-                    className="font-display leading-relaxed break-words flex-1"
+                    className="font-display leading-relaxed break-words flex-1 whitespace-pre-wrap"
                     style={{
                       color: safeColor,
                       fontSize: `${clampedFontSize}px`,
