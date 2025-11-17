@@ -283,7 +283,7 @@ export default function Home() {
               document.execCommand('insertText', false, text);
             }}
             data-placeholder="여기에 메시지를 입력해보세요..."
-            className="outline-none w-full h-full font-display leading-relaxed text-center flex items-center justify-center"
+            className="outline-none w-full font-display leading-relaxed text-center whitespace-pre-wrap"
             style={{
               color: fontColor,
               fontSize: `${fontSize}px`,
