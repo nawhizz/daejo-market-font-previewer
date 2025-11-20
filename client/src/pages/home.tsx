@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -36,6 +37,8 @@ export default function Home() {
   const [bgColor, setBgColor] = useState("#FFF8E1");
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
+  const [lineHeight, setLineHeight] = useState(1.5);
+  const [letterSpacing, setLetterSpacing] = useState(0);
   
   const { toast } = useToast();
 
@@ -83,6 +86,8 @@ export default function Home() {
         fontSize: `${fontSize}px`,
         fontWeight: isBold ? "bold" : "normal",
         fontStyle: isItalic ? "italic" : "normal",
+        lineHeight,
+        letterSpacing: `${letterSpacing}em`,
       },
       bgColor,
     };
@@ -228,6 +233,44 @@ export default function Home() {
                 </Button>
               </div>
             </div>
+
+            {/* Line Height */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-semibold">줄간격</label>
+                <span className="text-sm text-muted-foreground" data-testid="text-lineheight-value">
+                  {lineHeight.toFixed(1)}
+                </span>
+              </div>
+              <Slider
+                value={[lineHeight]}
+                onValueChange={(values) => setLineHeight(values[0])}
+                min={0.8}
+                max={2.0}
+                step={0.1}
+                className="w-full"
+                data-testid="slider-lineheight"
+              />
+            </div>
+
+            {/* Letter Spacing */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-semibold">글자간격</label>
+                <span className="text-sm text-muted-foreground" data-testid="text-letterspacing-value">
+                  {letterSpacing.toFixed(2)}em
+                </span>
+              </div>
+              <Slider
+                value={[letterSpacing]}
+                onValueChange={(values) => setLetterSpacing(values[0])}
+                min={-0.05}
+                max={0.5}
+                step={0.01}
+                className="w-full"
+                data-testid="slider-letterspacing"
+              />
+            </div>
           </div>
         </div>
 
@@ -283,12 +326,14 @@ export default function Home() {
               document.execCommand('insertText', false, text);
             }}
             data-placeholder="여기에 메시지를 입력해보세요..."
-            className="outline-none w-full font-display leading-relaxed text-center whitespace-pre-wrap"
+            className="outline-none w-full font-display text-center whitespace-pre-wrap"
             style={{
               color: fontColor,
               fontSize: `${fontSize}px`,
               fontWeight: isBold ? "bold" : "normal",
               fontStyle: isItalic ? "italic" : "normal",
+              lineHeight,
+              letterSpacing: `${letterSpacing}em`,
             }}
             data-testid="input-memo-content"
           />

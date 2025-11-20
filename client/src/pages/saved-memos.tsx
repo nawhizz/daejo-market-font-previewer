@@ -58,6 +58,12 @@ export default function SavedMemos() {
               const safeBgColor = /^#[0-9A-Fa-f]{6}$/.test(memo.bgColor)
                 ? memo.bgColor
                 : "#FFF8E1";
+              const safeLineHeight = typeof memo.styles.lineHeight === "number" 
+                ? Math.min(Math.max(memo.styles.lineHeight, 0.8), 2.0)
+                : 1.5;
+              const safeLetterSpacing = /^-?[0-9]*\.?[0-9]+em$/.test(memo.styles.letterSpacing)
+                ? memo.styles.letterSpacing
+                : "0em";
 
               return (
                 <Card
@@ -67,12 +73,14 @@ export default function SavedMemos() {
                   data-testid={`card-memo-${memo.id}`}
                 >
                   <div
-                    className="font-display leading-relaxed break-words flex-1 whitespace-pre-wrap"
+                    className="font-display break-words flex-1 whitespace-pre-wrap"
                     style={{
                       color: safeColor,
                       fontSize: `${clampedFontSize}px`,
                       fontWeight: safeFontWeight,
                       fontStyle: safeFontStyle,
+                      lineHeight: safeLineHeight,
+                      letterSpacing: safeLetterSpacing,
                     }}
                     data-testid={`text-memo-content-${memo.id}`}
                   >

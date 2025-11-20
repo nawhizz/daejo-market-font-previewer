@@ -9,6 +9,8 @@ export const memoStylesSchema = z.object({
   fontSize: z.string().regex(/^(1[6-9]|[2-6][0-9]|7[0-2])px$/, "Font size must be between 16px and 72px"),
   fontWeight: z.enum(["normal", "bold"]),
   fontStyle: z.enum(["normal", "italic"]),
+  lineHeight: z.number().min(0.8).max(2.0),
+  letterSpacing: z.string().regex(/^-?[0-9]*\.?[0-9]+em$/, "Letter spacing must be in em units"),
 }).strict();
 
 export const memos = pgTable("memos", {
