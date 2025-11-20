@@ -2,7 +2,7 @@
 
 ## 프로젝트 개요
 
-대조시장 재디자인 프로젝트의 전용 폰트를 사용자가 직접 체험하고 꾸며볼 수 있는 인터랙티브 웹 애플리케이션입니다. 사용자는 텍스트를 입력하고, 폰트 스타일(색상, 크기, 굵기, 기울임)과 배경색을 자유롭게 조정한 후 저장할 수 있습니다. iPad 화면에 최적화된 레이아웃과 터치 타겟으로 태블릿 환경에서 최상의 사용자 경험을 제공합니다.
+대조시장 재디자인 프로젝트의 전용 폰트를 사용자가 직접 체험하고 꾸며볼 수 있는 인터랙티브 웹 애플리케이션입니다. 사용자는 텍스트를 입력하고, 폰트 스타일(색상, 크기, 굵기, 기울임)과 배경색을 자유롭게 조정한 후 저장할 수 있습니다. 줄간격은 1.5, 글자간격은 0.0em으로 고정되어 최적의 가독성을 제공합니다. iPad 화면에 최적화된 레이아웃과 터치 타겟으로 태블릿 환경에서 최상의 사용자 경험을 제공합니다.
 
 ## 주요 기능 (MVP)
 
@@ -86,7 +86,9 @@
     color: string,        # 폰트 색상 (hex)
     fontSize: string,     # 폰트 크기 (16-72px)
     fontWeight: string,   # 'normal' | 'bold'
-    fontStyle: string     # 'normal' | 'italic'
+    fontStyle: string,    # 'normal' | 'italic'
+    lineHeight: number,   # 줄간격 (0.8-2.0, 고정값 1.5)
+    letterSpacing: string # 글자간격 (em 단위, 고정값 0em)
   }
 - bg_color: varchar (배경색, hex)
 - created_at: timestamp
@@ -105,7 +107,9 @@
     "color": "#D32F2F",
     "fontSize": "32px",
     "fontWeight": "bold",
-    "fontStyle": "italic"
+    "fontStyle": "italic",
+    "lineHeight": 1.5,
+    "letterSpacing": "0em"
   },
   "bgColor": "#FFF8E1"
 }
@@ -126,6 +130,8 @@
   - 폰트 크기: Regex `/^(1[6-9]|[2-6][0-9]|7[0-2])px$/`
   - 폰트 굵기: Enum `['normal', 'bold']`
   - 폰트 스타일: Enum `['normal', 'italic']`
+  - 줄간격: Number (0.8-2.0 범위 검증)
+  - 글자간격: Regex `/^-?[0-9]*\.?[0-9]+em$/`
   - `.strict()` 모드로 예상치 못한 필드 차단
 - **Server**: sanitize-html로 content HTML 태그 제거 + Zod schema 검증
 - **Client**: onPaste 핸들러 (plain text만 허용) + 렌더링 시 추가 검증 및 fallback
@@ -317,6 +323,7 @@ npm run db:push
 - **전환 방법**: UI를 통한 테마 전환 불가 (개발자 도구/localStorage를 통해서만 가능)
 
 ## 최종 업데이트
+- 2025-11-20: **줄간격/글자간격 고정** (lineHeight 1.5, letterSpacing 0em으로 고정, UI 컨트롤 숨김)
 - 2025-11-15: **테마 토글 버튼 제거** (다크 모드 기능은 유지, UI 접근 불가)
 - 2025-11-15: **스크롤 없는 2열 레이아웃** 구현 (h-screen, overflow-hidden)
 - 2025-11-15: 사이드바 + 에디터 구조로 UI 재구성

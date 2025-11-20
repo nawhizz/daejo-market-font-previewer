@@ -233,44 +233,6 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-
-            {/* Line Height */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-semibold">줄간격</label>
-                <span className="text-sm text-muted-foreground" data-testid="text-lineheight-value">
-                  {lineHeight.toFixed(1)}
-                </span>
-              </div>
-              <Slider
-                value={[lineHeight]}
-                onValueChange={(values) => setLineHeight(values[0])}
-                min={0.8}
-                max={2.0}
-                step={0.1}
-                className="w-full"
-                data-testid="slider-lineheight"
-              />
-            </div>
-
-            {/* Letter Spacing */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <label className="text-sm font-semibold">글자간격</label>
-                <span className="text-sm text-muted-foreground" data-testid="text-letterspacing-value">
-                  {letterSpacing.toFixed(2)}em
-                </span>
-              </div>
-              <Slider
-                value={[letterSpacing]}
-                onValueChange={(values) => setLetterSpacing(values[0])}
-                min={-0.05}
-                max={0.5}
-                step={0.01}
-                className="w-full"
-                data-testid="slider-letterspacing"
-              />
-            </div>
           </div>
         </div>
 
