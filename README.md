@@ -8,6 +8,8 @@
 
 **Repository**: [https://github.com/nawhizz/daejo-market-font-previewer](https://github.com/nawhizz/daejo-market-font-previewer)
 
+**Live Demo**: [https://daejo-market-font-previewer.vercel.app/](https://daejo-market-font-previewer.vercel.app/)
+
 ## ✨ 주요 기능
 
 - 🎨 **실시간 폰트 미리보기**: 대조시장체를 사용하여 실시간으로 텍스트 스타일 조정
@@ -124,7 +126,13 @@ MarketFontLab/
 
 ## 🚀 배포
 
-### Vercel (권장)
+### 배포된 애플리케이션
+
+이 프로젝트는 Vercel을 통해 자동으로 배포되어 있습니다:
+
+🔗 **[https://daejo-market-font-previewer.vercel.app/](https://daejo-market-font-previewer.vercel.app/)**
+
+### Vercel 배포 방법 (권장)
 
 1. Vercel 계정 연결 및 프로젝트 import
 2. 환경 변수 설정 (`.env.local` 내용)
