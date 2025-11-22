@@ -93,7 +93,20 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Placeholder for contentEditable */
+[contenteditable][data-placeholder]:empty:before {
+  content: attr(data-placeholder);
+  color: hsl(var(--muted-foreground));
+  opacity: 0.6;
+  cursor: text;
+}
+
+[contenteditable]:focus:before {
+  content: none;
 }
