@@ -1,0 +1,1 @@
+src/actions/save-memo.ts(17,49): error TS2339: Property 'errors' does not exist on type 'ZodError<{ content: string; styles: { color: string; fontSize: string; fontWeight: "normal" | "bold"; fontStyle: "normal" | "italic"; lineHeight: number; letterSpacing: string; }; bgColor: string; }>'.

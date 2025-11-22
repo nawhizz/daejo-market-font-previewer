@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 대조시장 전용 폰트 */
+@font-face {
+  font-family: 'DaejoMarket';
+  src: url('/fonts/DaejoMarket-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --background: 42 35% 97%;
+    --foreground: 25 30% 15%;
+    --card: 45 40% 98%;
+    --card-foreground: 25 30% 20%;
+    --popover: 42 35% 96%;
+    --popover-foreground: 25 30% 20%;
+    --primary: 25 85% 55%;
+    --primary-foreground: 25 10% 98%;
+    --secondary: 38 35% 88%;
+    --secondary-foreground: 25 30% 25%;
+    --muted: 40 30% 92%;
+    --muted-foreground: 25 20% 45%;
+    --accent: 35 60% 90%;
+    --accent-foreground: 25 30% 25%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 10% 98%;
+    --border: 38 25% 85%;
+    --input: 38 25% 75%;
+    --ring: 25 85% 55%;
+    --radius: 0.5rem;
+    --chart-1: 25 85% 50%;
+    --chart-2: 18 80% 55%;
+    --chart-3: 35 75% 60%;
+    --chart-4: 45 70% 55%;
+    --chart-5: 50 65% 50%;
+    --sidebar: 42 30% 95%;
+    --sidebar-foreground: 25 30% 20%;
+    --sidebar-primary: 25 85% 55%;
+    --sidebar-primary-foreground: 25 10% 98%;
+    --sidebar-accent: 38 30% 88%;
+    --sidebar-accent-foreground: 25 30% 25%;
+    --sidebar-border: 38 25% 88%;
+    --sidebar-ring: 25 85% 55%;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+    --font-serif: Georgia, serif;
+    --font-mono: Menlo, monospace;
+    --font-display: "DaejoMarket", "Black Han Sans", "Noto Sans KR", sans-serif;
+  }
+
+  .dark {
+    --background: 25 20% 10%;
+    --foreground: 42 30% 90%;
+    --card: 25 18% 12%;
+    --card-foreground: 42 28% 88%;
+    --popover: 25 18% 16%;
+    --popover-foreground: 42 28% 86%;
+    --primary: 25 80% 60%;
+    --primary-foreground: 25 10% 98%;
+    --secondary: 25 20% 24%;
+    --secondary-foreground: 42 25% 82%;
+    --muted: 25 18% 20%;
+    --muted-foreground: 42 18% 60%;
+    --accent: 35 40% 22%;
+    --accent-foreground: 42 25% 80%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 10% 98%;
+    --border: 25 15% 22%;
+    --input: 25 20% 35%;
+    --ring: 25 80% 60%;
+    --chart-1: 25 80% 65%;
+    --chart-2: 18 75% 68%;
+    --chart-3: 35 70% 65%;
+    --chart-4: 45 65% 62%;
+    --chart-5: 50 60% 58%;
+    --sidebar: 25 18% 14%;
+    --sidebar-foreground: 42 28% 86%;
+    --sidebar-primary: 25 80% 60%;
+    --sidebar-primary-foreground: 25 10% 98%;
+    --sidebar-accent: 25 20% 22%;
+    --sidebar-accent-foreground: 42 25% 82%;
+    --sidebar-border: 25 15% 20%;
+    --sidebar-ring: 25 80% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
