@@ -6,6 +6,8 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Supabase](https://img.shields.io/badge/Supabase-Latest-green)
 
+**Repository**: [https://github.com/nawhizz/daejo-market-font-previewer](https://github.com/nawhizz/daejo-market-font-previewer)
+
 ## ✨ 주요 기능
 
 - 🎨 **실시간 폰트 미리보기**: 대조시장체를 사용하여 실시간으로 텍스트 스타일 조정
@@ -48,8 +50,8 @@
 ### 1. 프로젝트 클론
 
 ```bash
-git clone <repository-url>
-cd MarketFontLab
+git clone https://github.com/nawhizz/daejo-market-font-previewer.git
+cd daejo-market-font-previewer
 ```
 
 ### 2. 의존성 설치
