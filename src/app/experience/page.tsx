@@ -7,6 +7,7 @@ import { Type, Palette, Plus, Minus, Bold, Italic, RotateCcw, BookOpen } from "l
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { saveMemo } from "@/actions/save-memo";
+import Image from "next/image";
 
 const PRESET_COLORS = [
     { name: "검정", value: "#212121" },
@@ -31,6 +32,7 @@ const PRESET_BG_COLORS = [
 export default function ExperiencePage() {
     const editorRef = useRef<HTMLDivElement>(null);
     const [content, setContent] = useState("");
+    const [isControlsVisible, setIsControlsVisible] = useState(false);
     const [fontSize, setFontSize] = useState(56);
     const [fontColor, setFontColor] = useState("#212121");
     const [bgColor, setBgColor] = useState("#FFFFFF");
@@ -42,6 +44,18 @@ export default function ExperiencePage() {
     const { toast } = useToast();
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'p') {
+                e.preventDefault();
+                setIsControlsVisible(prev => !prev);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
@@ -137,202 +151,228 @@ export default function ExperiencePage() {
         if (fontSize > 16) setFontSize(fontSize - 4);
     };
 
-    const handleClear = () => {
-        if (editorRef.current) {
-            editorRef.current.textContent = "";
-        }
-        setContent("");
-    };
-
     return (
-        <div className="h-screen bg-background flex overflow-hidden">
+        <div className="h-screen bg-white flex overflow-hidden">
             {/* Left Sidebar - Controls */}
-            <aside className="w-80 flex-shrink-0 border-r border-border bg-card flex flex-col overflow-hidden">
-                {/* Header */}
-                <div className="flex-shrink-0 p-6 border-b border-border">
-                    <Link href="/">
-                        <h1
-                            className="text-2xl font-display font-bold text-primary cursor-pointer hover:opacity-80 transition-opacity"
-                            data-testid="text-page-title"
-                        >
-                            대조시장체
-                        </h1>
-                    </Link>
-                    <p className="text-sm text-muted-foreground mt-1">폰트 체험하기</p>
-                </div>
+            {isControlsVisible && (
+                <aside className="w-80 flex-shrink-0 border-r border-border bg-card flex flex-col overflow-hidden z-20">
+                    {/* Header */}
+                    <div className="flex-shrink-0 p-6 border-b border-border">
+                        <Link href="/">
+                            <h1
+                                className="text-2xl font-display font-bold text-primary cursor-pointer hover:opacity-80 transition-opacity"
+                                data-testid="text-page-title"
+                            >
+                                대조시장체
+                            </h1>
+                        </Link>
+                        <p className="text-sm text-muted-foreground mt-1">폰트 체험하기</p>
+                    </div>
 
-                {/* Controls */}
-                <div className="flex-1 overflow-y-auto p-6 space-y-6 min-h-0">
-                    <div className="space-y-6">
-                        {/* Background Color Section */}
-                        <div className="space-y-3">
-                            <div className="flex items-center gap-2">
-                                <Palette className="w-5 h-5 text-muted-foreground" />
-                                <label className="text-sm font-semibold">배경 색상</label>
+                    {/* Controls */}
+                    <div className="flex-1 overflow-y-auto p-6 space-y-6 min-h-0">
+                        <div className="space-y-6">
+                            {/* Background Color Section */}
+                            <div className="space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <Palette className="w-5 h-5 text-muted-foreground" />
+                                    <label className="text-sm font-semibold">배경 색상</label>
+                                </div>
+                                <div className="grid grid-cols-4 gap-2">
+                                    {PRESET_BG_COLORS.map((color) => (
+                                        <button
+                                            key={color.value}
+                                            onClick={() => setBgColor(color.value)}
+                                            className={`w-12 h-12 rounded-lg transition-all ${bgColor === color.value
+                                                ? "ring-2 ring-primary ring-offset-1"
+                                                : "hover-elevate"
+                                                }`}
+                                            style={{ backgroundColor: color.value }}
+                                            title={color.name}
+                                            data-testid={`button-bgcolor-${color.name}`}
+                                        />
+                                    ))}
+                                </div>
                             </div>
-                            <div className="grid grid-cols-4 gap-2">
-                                {PRESET_BG_COLORS.map((color) => (
-                                    <button
-                                        key={color.value}
-                                        onClick={() => setBgColor(color.value)}
-                                        className={`w-12 h-12 rounded-lg transition-all ${bgColor === color.value
-                                            ? "ring-2 ring-primary ring-offset-1"
-                                            : "hover-elevate"
-                                            }`}
-                                        style={{ backgroundColor: color.value }}
-                                        title={color.name}
-                                        data-testid={`button-bgcolor-${color.name}`}
-                                    />
-                                ))}
-                            </div>
-                        </div>
 
-                        {/* Font Color Section */}
-                        <div className="space-y-3">
-                            <div className="flex items-center gap-2">
-                                <Type className="w-5 h-5 text-muted-foreground" />
-                                <label className="text-sm font-semibold">글자 색상</label>
+                            {/* Font Color Section */}
+                            <div className="space-y-3">
+                                <div className="flex items-center gap-2">
+                                    <Type className="w-5 h-5 text-muted-foreground" />
+                                    <label className="text-sm font-semibold">글자 색상</label>
+                                </div>
+                                <div className="grid grid-cols-4 gap-2">
+                                    {PRESET_COLORS.map((color) => (
+                                        <button
+                                            key={color.value}
+                                            onClick={() => setFontColor(color.value)}
+                                            className={`w-12 h-12 rounded-lg transition-all border-2 border-border ${fontColor === color.value
+                                                ? "ring-2 ring-primary ring-offset-1"
+                                                : "hover-elevate"
+                                                }`}
+                                            style={{ backgroundColor: color.value }}
+                                            title={color.name}
+                                            data-testid={`button-fontcolor-${color.name}`}
+                                        />
+                                    ))}
+                                </div>
                             </div>
-                            <div className="grid grid-cols-4 gap-2">
-                                {PRESET_COLORS.map((color) => (
-                                    <button
-                                        key={color.value}
-                                        onClick={() => setFontColor(color.value)}
-                                        className={`w-12 h-12 rounded-lg transition-all border-2 border-border ${fontColor === color.value
-                                            ? "ring-2 ring-primary ring-offset-1"
-                                            : "hover-elevate"
-                                            }`}
-                                        style={{ backgroundColor: color.value }}
-                                        title={color.name}
-                                        data-testid={`button-fontcolor-${color.name}`}
-                                    />
-                                ))}
-                            </div>
-                        </div>
 
-                        {/* Font Size */}
-                        <div className="space-y-3">
-                            <label className="text-sm font-semibold">글자 크기</label>
-                            <div className="flex items-center gap-2 justify-between">
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    onClick={decreaseFontSize}
-                                    disabled={fontSize <= 16}
-                                    className="w-11 h-11"
-                                    data-testid="button-decrease-fontsize"
-                                >
-                                    <Minus className="w-4 h-4" />
-                                </Button>
-                                <span
-                                    className="text-base font-semibold"
-                                    data-testid="text-fontsize-value"
-                                >
-                                    {fontSize}px
-                                </span>
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    onClick={increaseFontSize}
-                                    disabled={fontSize >= 72}
-                                    className="w-11 h-11"
-                                    data-testid="button-increase-fontsize"
-                                >
-                                    <Plus className="w-4 h-4" />
-                                </Button>
+                            {/* Font Size */}
+                            <div className="space-y-3">
+                                <label className="text-sm font-semibold">글자 크기</label>
+                                <div className="flex items-center gap-2 justify-between">
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        onClick={decreaseFontSize}
+                                        disabled={fontSize <= 16}
+                                        className="w-11 h-11"
+                                        data-testid="button-decrease-fontsize"
+                                    >
+                                        <Minus className="w-4 h-4" />
+                                    </Button>
+                                    <span
+                                        className="text-base font-semibold"
+                                        data-testid="text-fontsize-value"
+                                    >
+                                        {fontSize}px
+                                    </span>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        onClick={increaseFontSize}
+                                        disabled={fontSize >= 72}
+                                        className="w-11 h-11"
+                                        data-testid="button-increase-fontsize"
+                                    >
+                                        <Plus className="w-4 h-4" />
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Bold & Italic */}
-                        <div className="space-y-3">
-                            <label className="text-sm font-semibold">스타일</label>
-                            <div className="flex gap-2">
-                                <Button
-                                    variant={isBold ? "default" : "outline"}
-                                    size="icon"
-                                    onClick={() => setIsBold(!isBold)}
-                                    className="flex-1 h-11"
-                                    data-testid="button-toggle-bold"
-                                >
-                                    <Bold className="w-4 h-4" />
-                                </Button>
-                                <Button
-                                    variant={isItalic ? "default" : "outline"}
-                                    size="icon"
-                                    onClick={() => setIsItalic(!isItalic)}
-                                    className="flex-1 h-11"
-                                    data-testid="button-toggle-italic"
-                                >
-                                    <Italic className="w-4 h-4" />
-                                </Button>
+                            {/* Bold & Italic */}
+                            <div className="space-y-3">
+                                <label className="text-sm font-semibold">스타일</label>
+                                <div className="flex gap-2">
+                                    <Button
+                                        variant={isBold ? "default" : "outline"}
+                                        size="icon"
+                                        onClick={() => setIsBold(!isBold)}
+                                        className="flex-1 h-11"
+                                        data-testid="button-toggle-bold"
+                                    >
+                                        <Bold className="w-4 h-4" />
+                                    </Button>
+                                    <Button
+                                        variant={isItalic ? "default" : "outline"}
+                                        size="icon"
+                                        onClick={() => setIsItalic(!isItalic)}
+                                        className="flex-1 h-11"
+                                        data-testid="button-toggle-italic"
+                                    >
+                                        <Italic className="w-4 h-4" />
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Action Buttons */}
-                <div className="flex-shrink-0 p-6 border-t border-border space-y-3">
-                    <Button
-                        onClick={handleClear}
-                        variant="outline"
-                        className="w-full h-12 gap-2"
-                        data-testid="button-clear-memo"
-                    >
-                        <RotateCcw className="w-4 h-4" />
-                        전체 지우기
-                    </Button>
-                    <Button
-                        onClick={handleSave}
-                        disabled={isPending}
-                        className="w-full h-12"
-                        data-testid="button-save-memo"
-                    >
-                        {isPending ? "저장 중..." : "저장하기"}
-                    </Button>
-                    <Link href="/saved-memos" className="block">
-                        <Button
-                            variant="outline"
-                            className="w-full h-12 gap-2"
-                            data-testid="button-view-saved-memos"
-                        >
-                            <BookOpen className="w-4 h-4" />
-                            메모 보기
-                        </Button>
-                    </Link>
-                </div>
-            </aside>
+                </aside>
+            )}
 
-            {/* Right Side - Editor */}
-            <main className="flex-1 flex flex-col overflow-hidden min-h-0">
-                <div
-                    className="flex-1 m-6 rounded-lg p-8 md:p-12 shadow-xl transition-colors duration-200 overflow-hidden flex items-center justify-center"
-                    style={{ backgroundColor: bgColor }}
-                >
-                    <div
-                        ref={editorRef}
-                        contentEditable
-                        suppressContentEditableWarning
-                        onInput={(e) => {
-                            const textContent = e.currentTarget.innerText || "";
-                            setContent(textContent);
-                        }}
-                        onPaste={(e) => {
-                            e.preventDefault();
-                            const text = e.clipboardData.getData('text/plain');
-                            document.execCommand('insertText', false, text);
-                        }}
-                        data-placeholder="여기에 메시지를 입력해보세요..."
-                        className="outline-none w-full font-display text-center whitespace-pre-wrap"
-                        style={{
-                            color: fontColor,
-                            fontSize: `${fontSize}px`,
-                            fontWeight: isBold ? "bold" : "normal",
-                            fontStyle: isItalic ? "italic" : "normal",
-                            lineHeight,
-                            letterSpacing: `${letterSpacing}em`,
-                        }}
-                        data-testid="input-memo-content"
+            {/* Main Content Area */}
+            <main className="flex-1 flex flex-col overflow-hidden min-h-0 relative bg-white">
+                {/* Top Banner */}
+                <div className="flex-shrink-0 w-full pt-4 pr-8 pb-0 pl-8">
+                    <Image
+                        src="/images/daejo-font-image.png"
+                        alt="대조시장체"
+                        width={1920}
+                        height={100}
+                        className="w-full h-auto object-contain"
+                        priority
                     />
+                </div>
+
+                {/* Editor Container */}
+                <div className="flex-1 pt-4 px-4 pb-0 md:pt-6 md:px-6 md:pb-0 overflow-hidden flex flex-col">
+                    <div
+                        className="flex-1 rounded-[30px] border border-[#E9E9E9] shadow-sm transition-colors duration-200 overflow-hidden flex flex-col p-8 md:p-12"
+                        style={{ backgroundColor: bgColor }}
+                    >
+                        <div
+                            ref={editorRef}
+                            contentEditable
+                            suppressContentEditableWarning
+                            onInput={(e) => {
+                                const textContent = e.currentTarget.innerText || "";
+                                setContent(textContent);
+                            }}
+                            onPaste={(e) => {
+                                e.preventDefault();
+                                const text = e.clipboardData.getData('text/plain');
+                                document.execCommand('insertText', false, text);
+                            }}
+                            data-placeholder="은평대조어울림체를 타이핑해보세요. . ."
+                            className="outline-none w-full h-full font-display text-left whitespace-pre-wrap"
+                            style={{
+                                color: fontColor,
+                                fontSize: `${fontSize}px`,
+                                fontWeight: isBold ? "bold" : "normal",
+                                fontStyle: isItalic ? "italic" : "normal",
+                                lineHeight,
+                                letterSpacing: `${letterSpacing}em`,
+                            }}
+                            data-testid="input-memo-content"
+                        />
+                    </div>
+                </div>
+
+                {/* Bottom Action Bar */}
+                <div className="flex-shrink-0 p-4 md:p-6 flex justify-between items-center bg-white">
+                    {/* Back Button */}
+                    <button
+                        onClick={() => router.back()}
+                        className="transition-transform hover:scale-105 active:scale-95"
+                        aria-label="뒤로 가기"
+                    >
+                        <Image
+                            src="/images/back-button.png"
+                            alt="뒤로 가기"
+                            width={48}
+                            height={48}
+                            className="w-12 h-12 object-contain"
+                        />
+                    </button>
+
+                    {/* Right Buttons */}
+                    <div className="flex gap-3">
+                        <Link href="/saved-memos">
+                            <div className="transition-transform hover:scale-105 active:scale-95 cursor-pointer">
+                                <Image
+                                    src="/images/memo-button.png"
+                                    alt="메모 보기"
+                                    width={100}
+                                    height={48}
+                                    className="h-12 w-auto object-contain"
+                                />
+                            </div>
+                        </Link>
+                        <button
+                            onClick={handleSave}
+                            disabled={isPending}
+                            className="transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            <Image
+                                src="/images/save-button.png"
+                                alt="저장하기"
+                                width={100}
+                                height={48}
+                                className="h-12 w-auto object-contain"
+                            />
+                        </button>
+                    </div>
                 </div>
             </main>
         </div>
