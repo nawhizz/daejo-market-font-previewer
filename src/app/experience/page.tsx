@@ -132,6 +132,19 @@ export default function ExperiencePage() {
                     description: "메모가 성공적으로 저장되었습니다.",
                     duration: 3000,
                 });
+
+                // 저장 성공 후 에디터 내용 및 상태 초기화
+                if (editorRef.current) {
+                    editorRef.current.innerText = "";
+                }
+                setContent("");
+                setFontSize(56);
+                setFontColor("#212121");
+                setBgColor("#FFFFFF");
+                setIsBold(false);
+                setIsItalic(false);
+                setLineHeight(1.5);
+                setLetterSpacing(0);
             } else {
                 toast({
                     title: "저장 실패",
