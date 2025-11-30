@@ -13,10 +13,17 @@ export default function Home() {
       />
       <Link
         href="/experience"
-        className="absolute inset-0 z-10 cursor-pointer"
-        aria-label="폰트 체험하기"
+        className="absolute top-[54%] left-1/2 -translate-x-1/2 z-10 w-[25vw] transition-transform hover:scale-105 active:scale-95"
+        aria-label="은평대조어울림체 체험하기"
       >
-        <span className="sr-only">폰트 체험하기</span>
+        <Image
+          src="/images/home-cta.png"
+          alt="은평대조어울림체 체험하기"
+          width={320}
+          height={85}
+          className="h-auto w-full"
+          priority
+        />
       </Link>
     </main>
   );
