@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { saveMemo } from "@/actions/save-memo";
 
 const PRESET_COLORS = [
-    { name: "검정", value: "#2C1810" },
+    { name: "검정", value: "#212121" },
     { name: "진한 갈색", value: "#5D4037" },
     { name: "빨강", value: "#D32F2F" },
     { name: "주황", value: "#F57C00" },
@@ -19,7 +19,7 @@ const PRESET_COLORS = [
 ];
 
 const PRESET_BG_COLORS = [
-    { name: "크림", value: "#FFF8E1" },
+    { name: "흰색", value: "#FFFFFF" },
     { name: "복숭아", value: "#FFE0B2" },
     { name: "살구", value: "#FFCCBC" },
     { name: "연한 노랑", value: "#FFFDE7" },
@@ -31,9 +31,9 @@ const PRESET_BG_COLORS = [
 export default function ExperiencePage() {
     const editorRef = useRef<HTMLDivElement>(null);
     const [content, setContent] = useState("");
-    const [fontSize, setFontSize] = useState(32);
-    const [fontColor, setFontColor] = useState("#2C1810");
-    const [bgColor, setBgColor] = useState("#FFF8E1");
+    const [fontSize, setFontSize] = useState(56);
+    const [fontColor, setFontColor] = useState("#212121");
+    const [bgColor, setBgColor] = useState("#FFFFFF");
     const [isBold, setIsBold] = useState(false);
     const [isItalic, setIsItalic] = useState(false);
     const [lineHeight, setLineHeight] = useState(1.5);
