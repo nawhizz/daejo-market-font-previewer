@@ -10,6 +10,7 @@ export async function saveMemo(formData: FormData) {
             content: formData.get("content"),
             styles: JSON.parse(formData.get("styles") as string),
             bgColor: formData.get("bgColor"),
+            authorName: formData.get("authorName") as string || "",
         };
 
         // Validate with Zod
@@ -28,6 +29,7 @@ export async function saveMemo(formData: FormData) {
                 content: sanitizedContent,
                 styles: validatedData.styles,
                 bg_color: validatedData.bgColor,
+                author_name: validatedData.authorName || null,
             }])
             .select();
 

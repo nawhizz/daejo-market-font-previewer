@@ -85,6 +85,13 @@ export default async function SavedMemos() {
                                         {memo.content}
                                     </div>
 
+                                    {/* Author Name */}
+                                    {memo.author_name && (
+                                        <div className="absolute bottom-8 left-8 text-sm text-gray-500 font-display">
+                                            From. {memo.author_name}
+                                        </div>
+                                    )}
+
                                     {/* Folded corner effect */}
                                     <div
                                         className="absolute bottom-0 right-0 w-0 h-0"

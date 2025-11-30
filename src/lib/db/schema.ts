@@ -24,6 +24,7 @@ export const insertMemoSchema = z.object({
     content: z.string(),
     styles: memoStylesSchema,
     bgColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Invalid hex color format"),
+    authorName: z.string().max(100).optional(),
 });
 
 export type InsertMemo = z.infer<typeof insertMemoSchema>;

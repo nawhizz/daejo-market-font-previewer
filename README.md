@@ -91,6 +91,7 @@ CREATE TABLE memos (
   content TEXT NOT NULL,
   styles JSONB NOT NULL,
   bg_color VARCHAR(7) NOT NULL,
+  author_name VARCHAR(100) NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 

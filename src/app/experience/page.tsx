@@ -40,6 +40,7 @@ export default function ExperiencePage() {
     const [isItalic, setIsItalic] = useState(false);
     const [lineHeight, setLineHeight] = useState(1.5);
     const [letterSpacing, setLetterSpacing] = useState(0);
+    const [authorName, setAuthorName] = useState("");
 
     const { toast } = useToast();
     const [isPending, startTransition] = useTransition();
@@ -117,6 +118,7 @@ export default function ExperiencePage() {
                 letterSpacing: `${letterSpacing}em`,
             },
             bgColor,
+            authorName,
         };
 
         startTransition(async () => {
@@ -124,6 +126,7 @@ export default function ExperiencePage() {
             formData.append("content", memoData.content);
             formData.append("styles", JSON.stringify(memoData.styles));
             formData.append("bgColor", memoData.bgColor);
+            formData.append("authorName", memoData.authorName);
 
             const result = await saveMemo(formData);
             if (result.success) {
@@ -145,6 +148,7 @@ export default function ExperiencePage() {
                 setIsItalic(false);
                 setLineHeight(1.5);
                 setLetterSpacing(0);
+                setAuthorName("");
             } else {
                 toast({
                     title: "저장 실패",
@@ -311,7 +315,7 @@ export default function ExperiencePage() {
                 {/* Editor Container */}
                 <div className="flex-1 pt-4 px-4 pb-0 md:pt-6 md:px-6 md:pb-0 overflow-hidden flex flex-col">
                     <div
-                        className="flex-1 rounded-[30px] border border-[#E9E9E9] shadow-sm transition-colors duration-200 overflow-hidden flex flex-col p-8 md:p-12"
+                        className="flex-1 rounded-[30px] border border-[#E9E9E9] shadow-sm transition-colors duration-200 flex flex-col p-8 md:p-12 relative"
                         style={{ backgroundColor: bgColor }}
                     >
                         <div
@@ -339,6 +343,19 @@ export default function ExperiencePage() {
                             }}
                             data-testid="input-memo-content"
                         />
+
+                        {/* Author Name Input */}
+                        <div className="absolute bottom-2 right-[-24px] flex items-center gap-6 bg-white/50 px-8 py-4 rounded-full backdrop-blur-sm transition-opacity hover:bg-white/80">
+                            <span className="text-gray-500 font-display text-[36px] leading-none pt-2">From.</span>
+                            <input
+                                type="text"
+                                value={authorName}
+                                onChange={(e) => setAuthorName(e.target.value)}
+                                placeholder="작성자 이름"
+                                className="bg-transparent border-none text-gray-500 font-display placeholder:text-muted-foreground/60 focus:outline-none w-[500px] text-[36px] leading-none pt-2"
+                                maxLength={20}
+                            />
+                        </div>
                     </div>
                 </div>
 
