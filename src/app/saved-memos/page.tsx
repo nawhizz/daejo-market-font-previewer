@@ -66,7 +66,7 @@ export default async function SavedMemos() {
                             return (
                                 <Card
                                     key={memo.id}
-                                    className="p-8 shadow-md border-none rounded-none min-h-[300px] flex flex-col transition-transform hover:-translate-y-1 duration-200"
+                                    className="p-8 shadow-md border-none rounded-none min-h-[300px] flex flex-col transition-transform hover:-translate-y-1 duration-200 relative overflow-hidden"
                                     style={{ backgroundColor: "#FFFFFF" }}
                                     data-testid={`card-memo-${memo.id}`}
                                 >
@@ -84,6 +84,17 @@ export default async function SavedMemos() {
                                     >
                                         {memo.content}
                                     </div>
+
+                                    {/* Folded corner effect */}
+                                    <div
+                                        className="absolute bottom-0 right-0 w-0 h-0"
+                                        style={{
+                                            borderStyle: 'solid',
+                                            borderWidth: '0 0 40px 40px',
+                                            borderColor: 'transparent transparent #e0e0e0 #f0f0f0',
+                                            boxShadow: '-2px 2px 5px rgba(0, 0, 0, 0.2)',
+                                        }}
+                                    />
                                 </Card>
                             );
                         })}
