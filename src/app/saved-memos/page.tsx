@@ -63,47 +63,61 @@ export default async function SavedMemos() {
                                 ? styles.letterSpacing
                                 : "0em";
 
-                            return (
-                                <Card
-                                    key={memo.id}
-                                    className="p-8 shadow-md border-none rounded-none min-h-[300px] flex flex-col transition-transform hover:-translate-y-1 duration-200 relative overflow-hidden"
-                                    style={{ backgroundColor: "#FFFFFF" }}
-                                    data-testid={`card-memo-${memo.id}`}
-                                >
-                                    <div
-                                        className="font-display break-words flex-1 whitespace-pre-wrap"
-                                        style={{
-                                            color: "#212121",
-                                            fontSize: `${clampedFontSize}px`,
-                                            fontWeight: safeFontWeight,
-                                            fontStyle: safeFontStyle,
-                                            lineHeight: safeLineHeight,
-                                            letterSpacing: safeLetterSpacing,
-                                        }}
-                                        data-testid={`text-memo-content-${memo.id}`}
-                                    >
-                                        {memo.content}
-                                    </div>
+                            const CORNER_SIZE = 40;
+                            const clipPathValue = `polygon(0 0, 100% 0, 100% calc(100% - ${CORNER_SIZE}px), calc(100% - ${CORNER_SIZE}px) 100%, 0 100%)`;
 
-                                    {/* Author Name */}
-                                    {memo.authorName && (
-                                        <div className="absolute bottom-8 left-8 text-gray-500 font-display flex items-baseline gap-1">
-                                            <span className="text-[16px]">From.</span>
-                                            <span className="text-[20px]">{memo.authorName}</span>
+                            return (
+                                <div className="relative group transition-transform hover:-translate-y-1 duration-200">
+                                    {/* Shadow Layer */}
+                                    <div
+                                        className="absolute inset-0 bg-gray-300/60 blur-md transform translate-y-2 translate-x-1 rounded-none"
+                                        style={{ clipPath: clipPathValue }}
+                                    />
+
+                                    <Card
+                                        key={memo.id}
+                                        className="p-8 border-none rounded-none min-h-[300px] h-full flex flex-col relative overflow-hidden"
+                                        style={{
+                                            backgroundColor: "#FFFFFF",
+                                            clipPath: clipPathValue
+                                        }}
+                                        data-testid={`card-memo-${memo.id}`}
+                                    >
+                                        <div
+                                            className="font-display break-words flex-1 whitespace-pre-wrap"
+                                            style={{
+                                                color: "#212121",
+                                                fontSize: `${clampedFontSize}px`,
+                                                fontWeight: safeFontWeight,
+                                                fontStyle: safeFontStyle,
+                                                lineHeight: safeLineHeight,
+                                                letterSpacing: safeLetterSpacing,
+                                            }}
+                                            data-testid={`text-memo-content-${memo.id}`}
+                                        >
+                                            {memo.content}
                                         </div>
-                                    )}
+
+                                        {/* Author Name */}
+                                        {memo.authorName && (
+                                            <div className="absolute bottom-8 left-8 text-gray-500 font-display flex items-baseline gap-1">
+                                                <span className="text-[16px]">From.</span>
+                                                <span className="text-[20px]">{memo.authorName}</span>
+                                            </div>
+                                        )}
+                                    </Card>
 
                                     {/* Folded corner effect */}
                                     <div
-                                        className="absolute bottom-0 right-0 w-0 h-0"
+                                        className="absolute bottom-0 right-0 z-10 pointer-events-none"
                                         style={{
-                                            borderStyle: 'solid',
-                                            borderWidth: '0 0 40px 40px',
-                                            borderColor: 'transparent transparent #e0e0e0 #f0f0f0',
-                                            boxShadow: '-2px 2px 5px rgba(0, 0, 0, 0.2)',
+                                            width: `${CORNER_SIZE}px`,
+                                            height: `${CORNER_SIZE}px`,
+                                            background: 'linear-gradient(to bottom right, #ffffff 0%, #e5e7eb 48%, transparent 50%)',
+                                            filter: 'drop-shadow(-2px -2px 2px rgba(0,0,0,0.15))'
                                         }}
                                     />
-                                </Card>
+                                </div>
                             );
                         })}
                     </div>

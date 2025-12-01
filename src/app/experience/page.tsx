@@ -313,46 +313,49 @@ export default function ExperiencePage() {
                 </div>
 
                 {/* Editor Container */}
-                <div className="flex-1 pt-4 px-4 pb-0 md:pt-6 md:px-6 md:pb-0 overflow-hidden flex flex-col">
+                <div className="flex-1 pt-4 px-4 pb-0 md:pt-6 md:px-6 md:pb-0 flex flex-col min-h-0">
                     <div
                         className="flex-1 rounded-[30px] border border-[#E9E9E9] shadow-sm transition-colors duration-200 flex flex-col p-8 md:p-12 relative"
                         style={{ backgroundColor: bgColor }}
                     >
-                        <div
-                            ref={editorRef}
-                            contentEditable
-                            suppressContentEditableWarning
-                            onInput={(e) => {
-                                const textContent = e.currentTarget.innerText || "";
-                                setContent(textContent);
-                            }}
-                            onPaste={(e) => {
-                                e.preventDefault();
-                                const text = e.clipboardData.getData('text/plain');
-                                document.execCommand('insertText', false, text);
-                            }}
-                            data-placeholder="은평대조어울림체를 타이핑해보세요. . ."
-                            className="outline-none w-full h-full font-display text-left whitespace-pre-wrap"
-                            style={{
-                                color: fontColor,
-                                fontSize: `${fontSize}px`,
-                                fontWeight: isBold ? "bold" : "normal",
-                                fontStyle: isItalic ? "italic" : "normal",
-                                lineHeight,
-                                letterSpacing: `${letterSpacing}em`,
-                            }}
-                            data-testid="input-memo-content"
-                        />
+                        <div className="flex-1 relative min-h-0 w-full">
+                            <div
+                                ref={editorRef}
+                                contentEditable
+                                suppressContentEditableWarning
+                                onInput={(e) => {
+                                    const textContent = e.currentTarget.innerText || "";
+                                    setContent(textContent);
+                                }}
+                                onPaste={(e) => {
+                                    e.preventDefault();
+                                    const text = e.clipboardData.getData('text/plain');
+                                    document.execCommand('insertText', false, text);
+                                }}
+                                data-placeholder="은평대조어울림체를 타이핑해보세요. . ."
+                                className="outline-none absolute inset-0 font-display text-left whitespace-pre-wrap overflow-y-auto custom-scrollbar pr-2"
+                                style={{
+                                    color: fontColor,
+                                    fontSize: `${fontSize}px`,
+                                    fontWeight: isBold ? "bold" : "normal",
+                                    fontStyle: isItalic ? "italic" : "normal",
+                                    lineHeight,
+                                    letterSpacing: `${letterSpacing}em`,
+                                }}
+                                data-testid="input-memo-content"
+                            />
+                        </div>
 
                         {/* Author Name Input */}
-                        <div className="absolute bottom-2 right-[-24px] flex items-center gap-6 bg-white/50 px-8 py-4 rounded-full backdrop-blur-sm transition-opacity hover:bg-white/80">
+                        {/* Author Name Input */}
+                        <div className="absolute bottom-8 right-8 flex items-center gap-6 bg-white/50 px-8 py-4 rounded-full backdrop-blur-sm transition-opacity hover:bg-white/80">
                             <span className="text-gray-500 font-display text-[36px] leading-none pt-2">From.</span>
                             <input
                                 type="text"
                                 value={authorName}
                                 onChange={(e) => setAuthorName(e.target.value)}
                                 placeholder="작성자 이름"
-                                className="bg-transparent border-none text-gray-500 font-display placeholder:text-muted-foreground/60 focus:outline-none w-[500px] text-[36px] leading-none pt-2"
+                                className="bg-transparent border-none text-gray-500 font-display placeholder:text-muted-foreground/60 focus:outline-none w-[300px] text-[36px] leading-none pt-2"
                                 maxLength={20}
                             />
                         </div>
