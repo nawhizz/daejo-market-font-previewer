@@ -17,6 +17,7 @@ export const memos = pgTable("memos", {
     content: text("content").notNull(),
     styles: jsonb("styles").notNull().$type<z.infer<typeof memoStylesSchema>>(),
     bgColor: varchar("bg_color").notNull(),
+    authorName: varchar("author_name").default(""),
     createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

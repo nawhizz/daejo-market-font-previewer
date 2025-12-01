@@ -21,6 +21,7 @@ export async function getMemos() {
             content: memo.content,
             styles: memo.styles,
             bgColor: memo.bg_color,
+            authorName: memo.author_name,
             createdAt: memo.created_at
         }));
     } catch (error) {

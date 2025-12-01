@@ -86,9 +86,10 @@ export default async function SavedMemos() {
                                     </div>
 
                                     {/* Author Name */}
-                                    {memo.author_name && (
-                                        <div className="absolute bottom-8 left-8 text-sm text-gray-500 font-display">
-                                            From. {memo.author_name}
+                                    {memo.authorName && (
+                                        <div className="absolute bottom-8 left-8 text-gray-500 font-display flex items-baseline gap-1">
+                                            <span className="text-[16px]">From.</span>
+                                            <span className="text-[20px]">{memo.authorName}</span>
                                         </div>
                                     )}
 
