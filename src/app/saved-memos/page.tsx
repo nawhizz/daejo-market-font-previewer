@@ -67,7 +67,7 @@ export default async function SavedMemos() {
                             const clipPathValue = `polygon(0 0, 100% 0, 100% calc(100% - ${CORNER_SIZE}px), calc(100% - ${CORNER_SIZE}px) 100%, 0 100%)`;
 
                             return (
-                                <div className="relative group transition-transform hover:-translate-y-1 duration-200">
+                                <div key={memo.id} className="relative group transition-transform hover:-translate-y-1 duration-200">
                                     {/* Shadow Layer */}
                                     <div
                                         className="absolute inset-0 bg-gray-300/60 blur-md transform translate-y-2 translate-x-1 rounded-none"
@@ -75,7 +75,6 @@ export default async function SavedMemos() {
                                     />
 
                                     <Card
-                                        key={memo.id}
                                         className="p-8 border-none rounded-none min-h-[300px] h-full flex flex-col relative overflow-hidden"
                                         style={{
                                             backgroundColor: "#FFFFFF",
@@ -84,7 +83,7 @@ export default async function SavedMemos() {
                                         data-testid={`card-memo-${memo.id}`}
                                     >
                                         <div
-                                            className="font-display break-words flex-1 whitespace-pre-wrap"
+                                            className="font-display break-words flex-1 whitespace-pre-wrap mb-16"
                                             style={{
                                                 color: "#212121",
                                                 fontSize: `${clampedFontSize}px`,
