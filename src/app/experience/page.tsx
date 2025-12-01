@@ -133,7 +133,7 @@ export default function ExperiencePage() {
                 toast({
                     title: "저장되었습니다!",
                     description: "메모가 성공적으로 저장되었습니다.",
-                    duration: 3000,
+                    duration: 1600,
                 });
 
                 // 저장 성공 후 에디터 내용 및 상태 초기화

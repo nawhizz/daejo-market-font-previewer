@@ -39,14 +39,12 @@ export default async function SavedMemos() {
                         <p className="text-muted-foreground text-lg mb-6">
                             아직 저장된 메모가 없습니다.
                         </p>
-                        <Link href="/">
-                            <Button data-testid="button-create-memo">
-                                첫 메모 만들기
-                            </Button>
-                        </Link>
                     </div>
                 ) : (
-                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3" data-testid="container-saved-memos">
+                    <div
+                        className="columns-1 md:columns-2 xl:columns-3 gap-6 space-y-6"
+                        data-testid="container-saved-memos"
+                    >
                         {savedMemos.map((memo) => {
                             const styles = memo.styles as any;
                             // Use saved font size but ensure it's readable in the grid
@@ -67,7 +65,7 @@ export default async function SavedMemos() {
                             const clipPathValue = `polygon(0 0, 100% 0, 100% calc(100% - ${CORNER_SIZE}px), calc(100% - ${CORNER_SIZE}px) 100%, 0 100%)`;
 
                             return (
-                                <div key={memo.id} className="relative group transition-transform hover:-translate-y-1 duration-200">
+                                <div key={memo.id} className="relative h-fit group transition-transform hover:-translate-y-1 duration-200 break-inside-avoid mb-6">
                                     {/* Shadow Layer */}
                                     <div
                                         className="absolute inset-0 bg-gray-300/60 blur-md transform translate-y-2 translate-x-1 rounded-none"
@@ -75,7 +73,7 @@ export default async function SavedMemos() {
                                     />
 
                                     <Card
-                                        className="p-8 border-none rounded-none min-h-[300px] h-full flex flex-col relative overflow-hidden"
+                                        className="p-8 border-none rounded-none flex flex-col relative overflow-hidden"
                                         style={{
                                             backgroundColor: "#FFFFFF",
                                             clipPath: clipPathValue
