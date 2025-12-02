@@ -75,7 +75,8 @@ export default function ExperiencePage() {
         const events = [
             "mousedown",
             "mousemove",
-            "keypress",
+            "keydown",
+            "input",
             "scroll",
             "touchstart",
             "click",
@@ -349,13 +350,14 @@ export default function ExperiencePage() {
                         {/* Author Name Input */}
                         {/* Author Name Input */}
                         <div className="absolute bottom-8 right-8 flex items-center gap-6 bg-white/50 px-8 py-4 rounded-full backdrop-blur-sm transition-opacity hover:bg-white/80">
-                            <span className="text-gray-500 font-display text-[36px] leading-none pt-2">From.</span>
+                            <span className="text-gray-500 text-[36px] leading-none pt-2" style={{ fontFamily: 'Pretendard' }}>From.</span>
                             <input
                                 type="text"
                                 value={authorName}
                                 onChange={(e) => setAuthorName(e.target.value)}
                                 placeholder="작성자 이름"
-                                className="bg-transparent border-none text-gray-500 font-display placeholder:text-muted-foreground/60 focus:outline-none w-[300px] text-[36px] leading-none pt-2"
+                                className="bg-transparent border-none text-gray-500 placeholder:text-muted-foreground/60 focus:outline-none w-[300px] text-[36px] leading-none pt-2"
+                                style={{ fontFamily: 'Pretendard' }}
                                 maxLength={20}
                             />
                         </div>

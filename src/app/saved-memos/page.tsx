@@ -68,7 +68,7 @@ export default async function SavedMemos() {
                                 <div key={memo.id} className="relative h-fit group transition-transform hover:-translate-y-1 duration-200 break-inside-avoid mb-6">
                                     {/* Shadow Layer */}
                                     <div
-                                        className="absolute inset-0 bg-gray-300/60 blur-md transform translate-y-2 translate-x-1 rounded-none"
+                                        className="absolute inset-0 bg-gray-300/30 blur-md transform translate-y-2 translate-x-1 rounded-none"
                                         style={{ clipPath: clipPathValue }}
                                     />
 
@@ -97,9 +97,9 @@ export default async function SavedMemos() {
 
                                         {/* Author Name */}
                                         {memo.authorName && (
-                                            <div className="absolute bottom-8 left-8 text-gray-500 font-display flex items-baseline gap-1">
+                                            <div className="absolute bottom-8 left-8 text-gray-500 flex items-baseline gap-1" style={{ fontFamily: 'Pretendard' }}>
                                                 <span className="text-[16px]">From.</span>
-                                                <span className="text-[20px]">{memo.authorName}</span>
+                                                <span className="text-[16px]">{memo.authorName}</span>
                                             </div>
                                         )}
                                     </Card>
