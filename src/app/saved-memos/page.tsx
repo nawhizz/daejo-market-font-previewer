@@ -110,8 +110,8 @@ export default async function SavedMemos() {
                                         style={{
                                             width: `${CORNER_SIZE}px`,
                                             height: `${CORNER_SIZE}px`,
-                                            background: 'linear-gradient(to bottom right, #ffffff 0%, #e5e7eb 48%, transparent 50%)',
-                                            filter: 'drop-shadow(-2px -2px 2px rgba(0,0,0,0.15))'
+                                            background: 'linear-gradient(to bottom right, #ffffff 0%, #ffffff 48%, transparent 50%)',
+                                            filter: 'drop-shadow(-2px -2px 2px rgba(126, 126, 126, 0.2))'
                                         }}
                                     />
                                 </div>
