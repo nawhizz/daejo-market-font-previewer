@@ -20,7 +20,7 @@ const PRESET_COLORS = [
 ];
 
 const PRESET_BG_COLORS = [
-    { name: "흰색", value: "#FDFDFD" },
+    { name: "흰색", value: "#FFFFFF" },
     { name: "복숭아", value: "#FFE0B2" },
     { name: "살구", value: "#FFCCBC" },
     { name: "연한 노랑", value: "#FFFDE7" },
@@ -35,7 +35,7 @@ export default function ExperiencePage() {
     const [isControlsVisible, setIsControlsVisible] = useState(false);
     const [fontSize, setFontSize] = useState(56);
     const [fontColor, setFontColor] = useState("#212121");
-    const [bgColor, setBgColor] = useState("#FDFDFD");
+    const [bgColor, setBgColor] = useState("#FFFFFF");
     const [isBold, setIsBold] = useState(false);
     const [isItalic, setIsItalic] = useState(false);
     const [lineHeight, setLineHeight] = useState(1.5);
@@ -170,7 +170,7 @@ export default function ExperiencePage() {
     };
 
     return (
-        <div className="h-screen bg-white flex overflow-hidden">
+        <div className="h-screen bg-[#FDFDFD] flex overflow-hidden">
             {/* Left Sidebar - Controls */}
             {isControlsVisible && (
                 <aside className="w-80 flex-shrink-0 border-r border-border bg-card flex flex-col overflow-hidden z-20">
@@ -300,7 +300,7 @@ export default function ExperiencePage() {
             )}
 
             {/* Main Content Area */}
-            <main className="flex-1 flex flex-col overflow-hidden min-h-0 relative bg-white">
+            <main className="flex-1 flex flex-col overflow-hidden min-h-0 relative bg-[#FDFDFD]">
                 {/* Top Banner */}
                 <div className="flex-shrink-0 w-full pt-4 pr-8 pb-0 pl-8">
                     <Image
@@ -348,7 +348,6 @@ export default function ExperiencePage() {
                         </div>
 
                         {/* Author Name Input */}
-                        {/* Author Name Input */}
                         <div className="absolute bottom-8 right-8 flex items-center gap-6 bg-white/50 px-8 py-4 rounded-full backdrop-blur-sm transition-opacity hover:bg-white/80">
                             <span className="text-gray-500 text-[36px] leading-none pt-2" style={{ fontFamily: 'Pretendard' }}>From.</span>
                             <input
@@ -365,7 +364,7 @@ export default function ExperiencePage() {
                 </div>
 
                 {/* Bottom Action Bar */}
-                <div className="flex-shrink-0 p-4 md:p-6 flex justify-between items-center bg-white">
+                <div className="flex-shrink-0 p-4 md:p-6 flex justify-between items-center bg-[#FDFDFD]">
                     {/* Back Button */}
                     <button
                         onClick={() => router.back()}
