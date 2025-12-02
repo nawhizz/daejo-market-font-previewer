@@ -20,7 +20,7 @@ const PRESET_COLORS = [
 ];
 
 const PRESET_BG_COLORS = [
-    { name: "흰색", value: "#FFFFFF" },
+    { name: "흰색", value: "#FDFDFD" },
     { name: "복숭아", value: "#FFE0B2" },
     { name: "살구", value: "#FFCCBC" },
     { name: "연한 노랑", value: "#FFFDE7" },
@@ -35,7 +35,7 @@ export default function ExperiencePage() {
     const [isControlsVisible, setIsControlsVisible] = useState(false);
     const [fontSize, setFontSize] = useState(56);
     const [fontColor, setFontColor] = useState("#212121");
-    const [bgColor, setBgColor] = useState("#FFFFFF");
+    const [bgColor, setBgColor] = useState("#FDFDFD");
     const [isBold, setIsBold] = useState(false);
     const [isItalic, setIsItalic] = useState(false);
     const [lineHeight, setLineHeight] = useState(1.5);
@@ -304,7 +304,7 @@ export default function ExperiencePage() {
                 {/* Top Banner */}
                 <div className="flex-shrink-0 w-full pt-4 pr-8 pb-0 pl-8">
                     <Image
-                        src="/images/daejo-font-image.png"
+                        src="/images/daejo-font-image.svg"
                         alt="대조시장체"
                         width={1920}
                         height={100}
@@ -373,7 +373,7 @@ export default function ExperiencePage() {
                         aria-label="뒤로 가기"
                     >
                         <Image
-                            src="/images/back-button.png"
+                            src="/images/back-button.svg"
                             alt="뒤로 가기"
                             width={48}
                             height={48}
@@ -386,7 +386,7 @@ export default function ExperiencePage() {
                         <Link href="/saved-memos">
                             <div className="transition-transform hover:scale-105 active:scale-95 cursor-pointer">
                                 <Image
-                                    src="/images/memo-button.png"
+                                    src="/images/memo-button.svg"
                                     alt="메모 보기"
                                     width={100}
                                     height={48}
@@ -400,7 +400,7 @@ export default function ExperiencePage() {
                             className="transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             <Image
-                                src="/images/save-button.png"
+                                src="/images/save-button.svg"
                                 alt="저장하기"
                                 width={100}
                                 height={48}

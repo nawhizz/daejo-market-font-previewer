@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className="relative min-h-screen w-full overflow-hidden">
       <Image
-        src="/images/home-banner.png"
+        src="/images/home-banner.svg"
         alt="대조시장체 폰트 체험하기"
         fill
         className="object-cover"
@@ -17,7 +17,7 @@ export default function Home() {
         aria-label="은평대조어울림체 체험하기"
       >
         <Image
-          src="/images/home-cta.png"
+          src="/images/home-cta.svg"
           alt="은평대조어울림체 체험하기"
           width={320}
           height={85}

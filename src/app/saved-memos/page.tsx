@@ -127,7 +127,7 @@ export default async function SavedMemos() {
                 className="fixed bottom-8 right-8 z-50 transition-transform hover:scale-105 active:scale-95"
             >
                 <Image
-                    src="/images/first-button.png"
+                    src="/images/first-button.svg"
                     alt="처음으로"
                     width={100}
                     height={100}
