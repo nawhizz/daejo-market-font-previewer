@@ -17,7 +17,7 @@
 - 📱 **반응형 UI**: 화면 크기 변경 시 배경 이미지와 버튼이 동일한 비율로 확대/축소
 - ⏱️ **스마트 자동 홈 복귀**: 
   - 20초간 사용자 활동이 없으면 자동으로 랜딩 페이지로 돌아감 (키오스크 모드)
-  - **입력 감지 개선**: 텍스트 입력 중에는 타이머가 지속적으로 초기화되어 작업이 중단되지 않음
+  - **입력 감지 개선**: 텍스트 입력 중(`input`, `keydown` 이벤트 감지)에는 타이머가 지속적으로 초기화되어 작업이 중단되지 않음
 - 🎨 **실시간 폰트 미리보기**: 대조시장체를 사용하여 실시간으로 텍스트 스타일 조정
 - 🖌️ **다양한 커스터마이징**: 
   - 글자 색상 (7가지 프리셋)
@@ -32,7 +32,10 @@
 - 📋 **메모 목록**: 
   - 저장된 모든 메모를 카드 형태로 확인
   - 카드 하단에 작성자 이름 표시 (**Pretendard** 폰트)
-  - **향상된 시각 효과**: 깊이감 있는 부드러운 그림자와 접힌 종이 효과 적용
+  - **향상된 시각 효과**: 
+    - 깊이감 있는 부드러운 그림자 효과 (`blur-3xl`)
+    - 현실적인 접힌 종이 모서리 효과 (그라데이션 + 드롭 섀도우)
+    - 세련된 배경색 (#FDFDFD)
 
 ## 🛠️ 기술 스택
 
@@ -42,6 +45,7 @@
 - **Styling**: Tailwind CSS v3
 - **UI Components**: Radix UI + Shadcn/ui
 - **Icons**: Lucide React
+- **Fonts**: DaejoMarket (대조시장체), Pretendard (작성자 표시용)
 
 ### Backend
 - **Database**: Supabase PostgreSQL
@@ -133,11 +137,17 @@ MarketFontLab/
 │       ├── db/           # DB 스키마 (참고용)
 │       └── utils.ts      # 헬퍼 함수
 ├── public/               # 정적 파일
-│   ├── images/           # 이미지 리소스
-│   │   ├── home-banner.png      # 홈 화면 배경 이미지
-│   │   ├── home-cta.png         # 홈 화면 버튼 이미지
-│   │   └── ...                  # 기타 UI 이미지
-│   └── DaejoMarket-Regular.ttf  # 대조시장 폰트
+│   ├── images/           # 이미지 리소스 (SVG)
+│   │   ├── home-banner.svg       # 홈 화면 배경 이미지
+│   │   ├── home-cta.svg          # 홈 화면 버튼 이미지
+│   │   ├── daejo-font-image.svg  # 체험 화면 상단 이미지
+│   │   ├── save-button.svg       # 저장 버튼
+│   │   ├── memo-button.svg       # 메모 보기 버튼
+│   │   ├── back-button.svg       # 뒤로 가기 버튼
+│   │   └── first-button.svg      # 처음으로 버튼
+│   └── fonts/            # 폰트 파일
+│       ├── DaejoMarket-Regular.ttf   # 대조시장 폰트
+│       └── Pretendard-Regular.woff   # Pretendard 폰트
 └── _legacy/              # 마이그레이션 이전 코드
 ```
 
