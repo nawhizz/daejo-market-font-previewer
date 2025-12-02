@@ -68,7 +68,7 @@ export default async function SavedMemos() {
                                 <div key={memo.id} className="relative h-fit group transition-transform hover:-translate-y-1 duration-200 break-inside-avoid mb-6">
                                     {/* Shadow Layer */}
                                     <div
-                                        className="absolute inset-0 bg-gray-300/30 blur-md transform translate-y-2 translate-x-1 rounded-none"
+                                        className="absolute inset-0 bg-gray-300/30 blur-3xl transform translate-y-1.5 translate-x-1 rounded-none"
                                         style={{ clipPath: clipPathValue }}
                                     />
 
