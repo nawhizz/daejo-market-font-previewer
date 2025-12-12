@@ -7,8 +7,7 @@ export async function getMemos() {
         const { data, error } = await supabase
             .from('memos')
             .select('*')
-            .order('created_at', { ascending: false })
-            .limit(20);
+            .order('created_at', { ascending: false });
 
         if (error) {
             console.error("Error fetching memos:", error);
